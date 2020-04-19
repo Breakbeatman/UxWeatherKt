@@ -16,11 +16,16 @@ class RemoteRequestMaker(listener: listener) {
     private lateinit var message: String
     private lateinit var builder: HttpUrl.Builder
 
-    private lateinit var jsonObject: JSONObject
+    private var jsonObject: JSONObject? = null
 
-    fun makeRequest(): JSONObject{
+        fun getJSONObject(): JSONObject? {
+            return jsonObject
+        }
 
-        builder = HttpUrl.parse("http://192.168.1.100:4567/forecast/bycityname")?.newBuilder()!!
+
+    fun makeRequest(): JSONObject? {
+
+        builder = HttpUrl.parse("http://192.168.1.47:4567/forecast/bycityname")?.newBuilder()!!
 
         builder.addQueryParameter("city", "Kingston")
             .addQueryParameter("type", "current")
@@ -40,17 +45,10 @@ class RemoteRequestMaker(listener: listener) {
             override fun onResponse(call: Call, response: Response) {
                 message = response.body()?.string()!!
                 //println(message)
-                try {
                     jsonObject = JSONObject(message)
-                }
-                catch (e: JSONException) {
-                    e.printStackTrace()
-                }
             }
         })
-
         return jsonObject
-
     }
 
 }
