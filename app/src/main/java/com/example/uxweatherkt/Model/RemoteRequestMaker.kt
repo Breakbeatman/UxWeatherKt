@@ -6,9 +6,9 @@ import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
 
-class RemoteRequestMaker(listener: listener) {
+class RemoteRequestMaker(private var listener: Listener) {
 
-    interface listener {
+    interface Listener {
         fun onRequestReady()
     }
 
@@ -31,7 +31,7 @@ class RemoteRequestMaker(listener: listener) {
             .addQueryParameter("type", "current")
 
         url = builder.build().url()
-        //println(url)
+        println(url)
         val okHttpClient = OkHttpClient()
         val request = Request.Builder()
             .url(url)
@@ -44,11 +44,16 @@ class RemoteRequestMaker(listener: listener) {
 
             override fun onResponse(call: Call, response: Response) {
                 message = response.body()?.string()!!
-                //println(message)
+                println(message)
                     jsonObject = JSONObject(message)
+                ready()
             }
         })
         return jsonObject
+    }
+
+    fun ready() {
+        listener.onRequestReady()
     }
 
 }

@@ -2,7 +2,7 @@ package com.example.uxweatherkt.Model
 
 import com.example.uxweatherkt.Contract
 
-class WeatherModel : Contract.WeatherModel, RemoteRequestMaker.listener{
+class WeatherModel : Contract.WeatherModel, RemoteRequestMaker.Listener{
 
     private lateinit var remoteRequestMaker: RemoteRequestMaker
 
@@ -16,5 +16,4 @@ class WeatherModel : Contract.WeatherModel, RemoteRequestMaker.listener{
     override fun onRequestReady() {
         println(remoteRequestMaker.getJSONObject())
     }
-
 }
