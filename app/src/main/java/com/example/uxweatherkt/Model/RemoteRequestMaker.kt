@@ -23,7 +23,7 @@ class RemoteRequestMaker(private var listener: Listener) {
         }
 
 
-    fun makeRequest(): JSONObject? {
+    fun makeRequest() {
 
         builder = HttpUrl.parse("http://192.168.1.47:4567/forecast/bycityname")?.newBuilder()!!
 
@@ -49,7 +49,6 @@ class RemoteRequestMaker(private var listener: Listener) {
                 ready()
             }
         })
-        return jsonObject
     }
 
     fun ready() {
