@@ -1,6 +1,6 @@
-package com.example.uxweatherkt.model
+package com.example.uxweatherkt.weather.model
 
-class Weather constructor(
+class CurrentWeather constructor(
 
         private var temperature: String
        /* var city: String,
@@ -35,4 +35,3 @@ class Weather constructor(
             set(value) {date = value}
             get() = date*/
     }
-

@@ -1,5 +1,6 @@
-package com.example.uxweatherkt.model
+package com.example.uxweatherkt.weather.repository
 
+import com.example.uxweatherkt.*
 import okhttp3.*
 import org.json.JSONObject
 import java.io.IOException
@@ -17,12 +18,12 @@ class RemoteRequestMaker(val listener: Listener) {
 
     var jsonObject: JSONObject? = null
 
-    fun makeRequest() {
+    fun makeRequest(requestTypeValue: String) {
 
-        builder = HttpUrl.parse("http://192.168.1.100:4567/forecast/bycityname")!!.newBuilder()
+        builder = HttpUrl.parse(PROXY_PATH)!!.newBuilder()
 
-        builder.addQueryParameter("city", "Kingston")
-            .addQueryParameter("type", "current")
+        builder.addQueryParameter(CITY_NAME_KEY, "Kingston")
+            .addQueryParameter(REQUEST_TYPE_KEY, requestTypeValue)
 
         url = builder.build().url()
         println(url)
@@ -38,7 +39,7 @@ class RemoteRequestMaker(val listener: Listener) {
 
             override fun onResponse(call: Call, response: Response) {
                 message = response.body()?.string()!!
-                println(message)
+//                println(message)
                 jsonObject = JSONObject(message)
 //                callback
                 listener.onRequestReady()
