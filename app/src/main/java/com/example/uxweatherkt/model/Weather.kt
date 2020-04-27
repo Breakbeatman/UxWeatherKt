@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.Model
+package com.example.uxweatherkt.model
 
 class Weather constructor(
 

@@ -1,12 +1,11 @@
-package com.example.uxweatherkt.UI
+package com.example.uxweatherkt.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import com.example.uxweatherkt.Contract
-import com.example.uxweatherkt.Presenter.WeatherPresenter
+import com.example.uxweatherkt.presenter.WeatherPresenter
 import com.example.uxweatherkt.R
 
 class MainActivity : AppCompatActivity(), Contract.WeatherView {
@@ -33,7 +32,6 @@ class MainActivity : AppCompatActivity(), Contract.WeatherView {
     }
 
     override fun showWeather(message: String) {
-        textView.setText(message)
+        textView.text = message
     }
-
 }

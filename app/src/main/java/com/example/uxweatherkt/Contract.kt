@@ -1,6 +1,6 @@
 package com.example.uxweatherkt
 
-import com.example.uxweatherkt.Model.Weather
+import com.example.uxweatherkt.model.Weather
 
 interface Contract {
 

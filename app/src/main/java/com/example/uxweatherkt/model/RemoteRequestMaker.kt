@@ -1,14 +1,13 @@
-package com.example.uxweatherkt.Model
+package com.example.uxweatherkt.model
 
 import okhttp3.*
-import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
 
-class RemoteRequestMaker(listener: listener) {
+class RemoteRequestMaker(val listener: Listener) {
 
-    interface listener {
+    interface Listener {
         fun onRequestReady()
     }
 
@@ -16,39 +15,34 @@ class RemoteRequestMaker(listener: listener) {
     private lateinit var message: String
     private lateinit var builder: HttpUrl.Builder
 
-    private var jsonObject: JSONObject? = null
+    var jsonObject: JSONObject? = null
 
-        fun getJSONObject(): JSONObject? {
-            return jsonObject
-        }
+    fun makeRequest() {
 
-
-    fun makeRequest(): JSONObject? {
-
-        builder = HttpUrl.parse("http://192.168.1.47:4567/forecast/bycityname")?.newBuilder()!!
+        builder = HttpUrl.parse("http://192.168.1.100:4567/forecast/bycityname")!!.newBuilder()
 
         builder.addQueryParameter("city", "Kingston")
             .addQueryParameter("type", "current")
 
         url = builder.build().url()
-        //println(url)
+        println(url)
         val okHttpClient = OkHttpClient()
         val request = Request.Builder()
             .url(url)
             .build()
 
-        okHttpClient.newCall(request).enqueue(object: Callback{
+        okHttpClient.newCall(request).enqueue(object : Callback {
             override fun onFailure(call: Call, e: IOException) {
-               e.printStackTrace()
+                e.printStackTrace()
             }
 
             override fun onResponse(call: Call, response: Response) {
                 message = response.body()?.string()!!
-                //println(message)
-                    jsonObject = JSONObject(message)
+                println(message)
+                jsonObject = JSONObject(message)
+//                callback
+                listener.onRequestReady()
             }
         })
-        return jsonObject
     }
-
 }

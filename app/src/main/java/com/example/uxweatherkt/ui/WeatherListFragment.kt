@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.UI
+package com.example.uxweatherkt.ui
 
 
 import android.os.Bundle

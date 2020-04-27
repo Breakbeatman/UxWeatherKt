@@ -1,7 +1,7 @@
-package com.example.uxweatherkt.Presenter
+package com.example.uxweatherkt.presenter
 
 import com.example.uxweatherkt.Contract
-import com.example.uxweatherkt.Model.WeatherModel
+import com.example.uxweatherkt.model.WeatherModel
 
 class WeatherPresenter (private var weatherView: Contract.WeatherView, private var weatherModel: Contract.WeatherModel = WeatherModel()) : Contract.WeatherPresenter {
 
