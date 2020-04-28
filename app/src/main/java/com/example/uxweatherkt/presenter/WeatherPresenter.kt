@@ -1,17 +1,15 @@
 package com.example.uxweatherkt.presenter
 
-import com.example.uxweatherkt.Contract
-import com.example.uxweatherkt.weather.WeatherModel
+import com.example.uxweatherkt.ui.WeatherView
 
-class WeatherPresenter (private var weatherView: Contract.WeatherView, private var weatherModel: Contract.WeatherModel = WeatherModel()) : Contract.WeatherPresenter {
+interface WeatherPresenter {
+    fun currentWeatherViewIsReady()
 
-    private lateinit var message: String
+    fun hourlyWeatherViewIsReady()
 
-    override fun requestToUpdate() {
-        message = weatherModel.loadCurrentWeather().getTemperature
-        weatherModel.loadHourlyWeather()
-        weatherModel.loadDailyWeather()
-        weatherView.showWeather(message)
-    }
+    fun dailyWeatherViewIsReady()
 
+    fun attachView(weatherView: WeatherView)
+
+    fun detachView()
 }
