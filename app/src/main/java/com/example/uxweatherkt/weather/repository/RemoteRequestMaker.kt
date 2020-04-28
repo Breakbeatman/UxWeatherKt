@@ -9,14 +9,12 @@ import java.net.URL
 class RemoteRequestMaker(val listener: Listener) {
 
     interface Listener {
-        fun onRequestReady()
+        fun onRequestReady(requestTypeValue: String, response: JSONObject)
     }
 
     private lateinit var url: URL
     private lateinit var message: String
     private lateinit var builder: HttpUrl.Builder
-
-    var jsonObject: JSONObject? = null
 
     fun makeRequest(requestTypeValue: String) {
 
@@ -38,11 +36,9 @@ class RemoteRequestMaker(val listener: Listener) {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                message = response.body()?.string()!!
-//                println(message)
-                jsonObject = JSONObject(message)
+                val responseW = JSONObject(response.body()!!.string())
 //                callback
-                listener.onRequestReady()
+                listener.onRequestReady(requestTypeValue, responseW)
             }
         })
     }
