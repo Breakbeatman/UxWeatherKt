@@ -2,8 +2,8 @@ package com.example.uxweatherkt.weather
 
 import com.example.uxweatherkt.*
 import com.example.uxweatherkt.weather.model.CurrentWeather
-import com.example.uxweatherkt.weather.model.OneDayForecast
-import com.example.uxweatherkt.weather.model.OneHourForecast
+import com.example.uxweatherkt.weather.model.DayForecast
+import com.example.uxweatherkt.weather.model.HourForecast
 
 import com.example.uxweatherkt.weather.repository.RemoteRequestMaker
 import com.example.uxweatherkt.weather.util.WeatherJSONParser
@@ -14,13 +14,13 @@ class WeatherModelImpl(private val listener: Listener) : WeatherModel, RemoteReq
     interface Listener {
         //        Плохо что в интерфейсе 3 метода???
         fun currentWeatherReady(currentWeather: CurrentWeather)
-        fun hourlyForecastReady(hourlyForecasts: ArrayList<OneHourForecast>)
-        fun dailyForecastReady(dailyForecast: ArrayList<OneDayForecast>)
+        fun hourlyForecastReady(hourlyForecast: ArrayList<HourForecast>)
+        fun dailyForecastReady(dailyForecast: ArrayList<DayForecast>)
     }
 
     private lateinit var currentWeather: CurrentWeather
-    private lateinit var hourlyForecasts: ArrayList<OneHourForecast>
-    private lateinit var dailyForecast: ArrayList<OneDayForecast>
+    private lateinit var hourlyForecast: ArrayList<HourForecast>
+    private lateinit var dailyForecast: ArrayList<DayForecast>
 
     private var weatherJSONParser = WeatherJSONParser()
     private var remoteRequestMaker = RemoteRequestMaker(this)
@@ -45,9 +45,9 @@ class WeatherModelImpl(private val listener: Listener) : WeatherModel, RemoteReq
                 listener.currentWeatherReady(currentWeather)
             }
             REQUEST_TYPE_VALUE_HOURLY -> {
-                hourlyForecasts =
+                hourlyForecast =
                     weatherJSONParser.parseHourlyWeather(response)
-                listener.hourlyForecastReady(hourlyForecasts)
+                listener.hourlyForecastReady(hourlyForecast)
             }
             REQUEST_TYPE_VALUE_DAILY -> {
                 dailyForecast =
