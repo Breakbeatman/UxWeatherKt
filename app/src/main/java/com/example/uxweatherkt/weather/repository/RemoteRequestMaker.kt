@@ -20,7 +20,7 @@ class RemoteRequestMaker(val listener: Listener) {
 
         builder = HttpUrl.parse(PROXY_PATH)!!.newBuilder()
 
-        builder.addQueryParameter(CITY_NAME_KEY, "Kingston")
+        builder.addQueryParameter(CITY_NAME_KEY, "Murino")
             .addQueryParameter(REQUEST_TYPE_KEY, requestTypeValue)
 
         url = builder.build().url()
