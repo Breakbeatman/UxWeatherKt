@@ -10,24 +10,41 @@
         android:id="@+id/fragment_current_weather_tv_temp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asd"/>
+        android:text="asd" />
+
+    <TextView
+        android:id="@+id/fragment_current_weather_tv_feel_like"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="asd" />
 
     <TextView
         android:id="@+id/fragment_current_weather_tv_pressure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asd"/>
+        android:text="asd" />
 
     <TextView
         android:id="@+id/fragment_current_weather_tv_humidity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asd"/>
+        android:text="asd" />
 
     <TextView
         android:id="@+id/fragment_current_weather_tv_wind_speed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="asd"/>
+        android:text="asd" />
+
+    <TextView
+        android:id="@+id/fragment_current_weather_tv_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="asd" />
+
+    <ImageView
+        android:id="@+id/fragment_current_weather_iv_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

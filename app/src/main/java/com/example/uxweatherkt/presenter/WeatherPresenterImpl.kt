@@ -46,14 +46,12 @@ class WeatherPresenterImpl : WeatherPresenter, WeatherModelImpl.Listener {
     }
 
     override fun hourlyForecastReady(hourlyForecast: ArrayList<HourForecast>) {
-//        TODO: binder
-        val hourlyForecastView = ArrayList<HourForecastView>()
+        val hourlyForecastView = dataBinder.bindHourlyForecastView(hourlyForecast)
         hourlyForecastData.postValue(hourlyForecastView)
     }
 
     override fun dailyForecastReady(dailyForecast: ArrayList<DayForecast>) {
-//        TODO: binder
-        val dailyForecastView = ArrayList<DayForecastView>()
+        val dailyForecastView = dataBinder.bindDailyForecastView(dailyForecast)
         dailyForecastData.postValue(dailyForecastView)
     }
 
