@@ -41,7 +41,7 @@ class WeatherPresenterImpl : WeatherPresenter, WeatherModelImpl.Listener {
     }
 
     override fun currentWeatherReady(currentWeather: CurrentWeather) {
-        val currentWeatherView = dataBinder.bindCurrentWeather(currentWeather)
+        val currentWeatherView = dataBinder.bindCurrentWeatherView(currentWeather)
         currentWeatherData.postValue(currentWeatherView)
     }
 
