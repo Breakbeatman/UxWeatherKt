@@ -1,6 +1,5 @@
 package com.example.uxweatherkt.ui
 
-import android.accounts.AuthenticatorDescription
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -30,13 +29,13 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     fun initData(currentWeatherView: CurrentWeatherView) {
-        tvTemp = activity!!.findViewById(R.id.fragment_current_weather_tv_temp)
-        tvFeelLike = activity!!.findViewById(R.id.fragment_current_weather_tv_feel_like)
-        tvPressure = activity!!.findViewById(R.id.fragment_current_weather_tv_pressure)
-        tvHumidity = activity!!.findViewById(R.id.fragment_current_weather_tv_humidity)
-        tvWindSpeed = activity!!.findViewById(R.id.fragment_current_weather_tv_wind_speed)
-        tvDescription = activity!!.findViewById(R.id.fragment_current_weather_tv_description)
-        ivDescription = activity!!.findViewById(R.id.fragment_current_weather_iv_description)
+        tvTemp = activity!!.findViewById(R.id.fragment_current_weather_tvTemp)
+        tvFeelLike = activity!!.findViewById(R.id.fragment_current_weather_tvFeelLike)
+        tvPressure = activity!!.findViewById(R.id.fragment_current_weather_tvPressure)
+        tvHumidity = activity!!.findViewById(R.id.fragment_current_weather_tvHumidity)
+        tvWindSpeed = activity!!.findViewById(R.id.fragment_current_weather_tvWindSpeed)
+        tvDescription = activity!!.findViewById(R.id.fragment_current_weather_tvDescription)
+        ivDescription = activity!!.findViewById(R.id.fragment_current_weather_ivDescription)
         tvTemp.text = currentWeatherView.temp
         tvFeelLike.text = currentWeatherView.feelLike
         tvPressure.text = currentWeatherView.pressure

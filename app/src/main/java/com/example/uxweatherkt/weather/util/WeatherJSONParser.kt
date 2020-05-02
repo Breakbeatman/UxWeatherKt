@@ -1,5 +1,6 @@
 package com.example.uxweatherkt.weather.util
 
+import android.util.Log
 import com.example.uxweatherkt.*
 import com.example.uxweatherkt.weather.model.CurrentWeather
 import com.example.uxweatherkt.weather.model.DayForecast
@@ -24,17 +25,18 @@ class WeatherJSONParser {
         val hourForecasts = ArrayList<HourForecast>()
         val hourlyForecastsJSON = jsonWeather.getJSONArray(PARSER_KEY_LIST)
         for (i in 0 until hourlyForecastsJSON.length()) {
-            val hourlyForecastJSON =  hourlyForecastsJSON.getJSONObject(i)
+            val hourlyForecastJSON = hourlyForecastsJSON.getJSONObject(i)
             val weather =
                 parseWeather(hourlyForecastJSON.getJSONObject(PARSER_KEY_WEATHER))
             val pod = hourlyForecastJSON.getString(PARSER_KEY_POD)
             val date = hourlyForecastJSON.getLong(PARSER_KEY_DATE)
-            val eve = hourlyForecastJSON.getDouble(PARSER_KEY_EVE)
+            val temp = hourlyForecastJSON.getDouble(PARSER_KEY_EVE)
+            val feelLike = hourlyForecastJSON.getDouble(PARSER_KEY_FEEL_LIKE)
             val pressure = hourlyForecastJSON.getDouble(PARSER_KEY_PRESSURE)
             val humidity = hourlyForecastJSON.getDouble(PARSER_KEY_HUMIDITY)
             val windSpeed = hourlyForecastJSON.getDouble(PARSER_KEY_WIND_SPEED)
             val oneHourForecast =
-                HourForecast(weather, pod, date, eve, pressure, humidity, windSpeed)
+                HourForecast(weather, pod, date, temp, feelLike, pressure, humidity, windSpeed)
             hourForecasts.add(oneHourForecast)
         }
         return hourForecasts
@@ -48,11 +50,24 @@ class WeatherJSONParser {
             val weather =
                 parseWeather(dailyForecastJSON.getJSONObject(PARSER_KEY_WEATHER))
             val date = dailyForecastJSON.getLong(PARSER_KEY_DATE)
-            val eve = dailyForecastJSON.getDouble(PARSER_KEY_EVE)
+            val maxTemp = dailyForecastJSON.getDouble(PARSER_KEY_MAX_TEMP)
+            val minTemp = dailyForecastJSON.getDouble(PARSER_KEY_MIN_TEMP)
+            val maxTempFeelLike = dailyForecastJSON.getDouble(PARSER_KEY_FEEL_LIKE_MAX_TEMP)
+            val minTempFeelLike = dailyForecastJSON.getDouble(PARSER_KEY_FEEL_LIKE_MIX_TEMP)
             val pressure = dailyForecastJSON.getDouble(PARSER_KEY_PRESSURE)
             val humidity = dailyForecastJSON.getDouble(PARSER_KEY_HUMIDITY)
             val windSpeed = dailyForecastJSON.getDouble(PARSER_KEY_WIND_SPEED)
-            val oneDayForecast = DayForecast(weather, date, eve, pressure, humidity, windSpeed)
+            val oneDayForecast = DayForecast(
+                weather,
+                date,
+                maxTemp,
+                minTemp,
+                maxTempFeelLike,
+                minTempFeelLike,
+                pressure,
+                humidity,
+                windSpeed
+            )
             dailyForecasts.add(oneDayForecast)
         }
         return dailyForecasts

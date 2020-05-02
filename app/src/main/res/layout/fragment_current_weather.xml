@@ -7,43 +7,43 @@
     tools:context=".ui.CurrentWeatherFragment">
 
     <TextView
-        android:id="@+id/fragment_current_weather_tv_temp"
+        android:id="@+id/fragment_current_weather_tvTemp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="asd" />
 
     <TextView
-        android:id="@+id/fragment_current_weather_tv_feel_like"
+        android:id="@+id/fragment_current_weather_tvFeelLike"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="asd" />
 
     <TextView
-        android:id="@+id/fragment_current_weather_tv_pressure"
+        android:id="@+id/fragment_current_weather_tvPressure"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="asd" />
 
     <TextView
-        android:id="@+id/fragment_current_weather_tv_humidity"
+        android:id="@+id/fragment_current_weather_tvHumidity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="asd" />
 
     <TextView
-        android:id="@+id/fragment_current_weather_tv_wind_speed"
+        android:id="@+id/fragment_current_weather_tvWindSpeed"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="asd" />
 
     <TextView
-        android:id="@+id/fragment_current_weather_tv_description"
+        android:id="@+id/fragment_current_weather_tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="asd" />
 
     <ImageView
-        android:id="@+id/fragment_current_weather_iv_description"
+        android:id="@+id/fragment_current_weather_ivDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

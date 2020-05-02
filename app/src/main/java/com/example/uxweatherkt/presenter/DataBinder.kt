@@ -10,13 +10,11 @@ import com.example.uxweatherkt.weather.model.HourForecast
 
 class DataBinder {
 
+    private val degree = "\u00B0C"
+
     fun bindCurrentWeatherView(currentWeather: CurrentWeather): CurrentWeatherView {
-        val temp = if (currentWeather.temp < 0) {
-            currentWeather.temp.toString()
-        } else {
-            "+" + currentWeather.temp.toString()
-        }
-        val feelLike = currentWeather.feelLike.toString()
+        val temp = currentWeather.temp.toString() + degree
+        val feelLike = currentWeather.feelLike.toString() + degree
         val pressure = currentWeather.pressure.toString()
         val humidity = currentWeather.humidity.toString()
         val windSpeed = currentWeather.windSpeed.toString()
@@ -37,11 +35,8 @@ class DataBinder {
         val hourlyForecastView = ArrayList<HourForecastView>()
         for (i in hourlyForecast.indices) {
             val date = hourlyForecast[i].date.toString()
-            val eveTemp = if (hourlyForecast[i].eveTemp < 0) {
-                hourlyForecast[i].eveTemp.toString()
-            } else {
-                "+" + hourlyForecast[i].eveTemp.toString()
-            }
+            val temp = hourlyForecast[i].temp.toString() + degree
+            val feelLike = hourlyForecast[i].feelLike.toString() + degree
             val pressure: String = hourlyForecast[i].pressure.toString()
             val humidity: String = hourlyForecast[i].humidity.toString()
             val windSpeed: String = hourlyForecast[i].windSpeed.toString()
@@ -49,7 +44,8 @@ class DataBinder {
             hourlyForecastView.add(
                 HourForecastView(
                     date,
-                    eveTemp,
+                    temp,
+                    feelLike,
                     pressure,
                     humidity,
                     windSpeed,
@@ -64,11 +60,10 @@ class DataBinder {
         val dailyForecastView = ArrayList<DayForecastView>()
         for (i in dailyForecast.indices) {
             val date = dailyForecast[i].date.toString()
-            val eveTemp = if (dailyForecast[i].eveTemp < 0) {
-                dailyForecast[i].eveTemp.toString()
-            } else {
-                "+" + dailyForecast[i].eveTemp.toString()
-            }
+            val maxTemp = dailyForecast[i].maxTemp.toString() + degree
+            val minTemp = dailyForecast[i].minTemp.toString() + degree
+            val maxTempFeelLike = dailyForecast[i].maxTempFeelLike.toString() + degree
+            val minTempFeelLike = dailyForecast[i].minTempFeelLike.toString() + degree
             val pressure: String = dailyForecast[i].pressure.toString()
             val humidity: String = dailyForecast[i].humidity.toString()
             val windSpeed: String = dailyForecast[i].windSpeed.toString()
@@ -76,7 +71,10 @@ class DataBinder {
             dailyForecastView.add(
                 DayForecastView(
                     date,
-                    eveTemp,
+                    maxTemp,
+                    minTemp,
+                    maxTempFeelLike,
+                    minTempFeelLike,
                     pressure,
                     humidity,
                     windSpeed,
