@@ -9,7 +9,7 @@ import com.example.uxweatherkt.presenter.WeatherPresenter
 import com.example.uxweatherkt.presenter.row.CurrentWeatherView
 import com.example.uxweatherkt.presenter.row.DayForecastView
 
-class MainActivity : AppCompatActivity(), WeatherView {
+class MainActivity : AppCompatActivity(), WeatherView, DailyForecastListFragment.Listener {
 
     private lateinit var weatherPresenter: WeatherPresenter
     private lateinit var currentWeatherFragment: CurrentWeatherFragment
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity(), WeatherView {
         weatherPresenter.currentWeatherViewIsReady()
         weatherPresenter.getDailyLiveData().observe(this, Observer
         { dailyForecastView -> dailyForecastDataLoaded(dailyForecastView as ArrayList<DayForecastView>) })
+        weatherPresenter.dailyWeatherViewIsReady()
     }
 
     override fun showWeather(message: String) {
@@ -61,5 +62,10 @@ class MainActivity : AppCompatActivity(), WeatherView {
 
     private fun dailyForecastDataLoaded(dailyForecastView: ArrayList<DayForecastView>) {
         dailyForecastListFragment.initData(dailyForecastView)
+    }
+
+    // нажатие на DayForecast
+    override fun onDailyForecastListItemClicked() {
+        TODO("Not yet implemented")
     }
 }

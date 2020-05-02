@@ -1,5 +1,6 @@
 package com.example.uxweatherkt.presenter
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.row.CurrentWeatherView
 import com.example.uxweatherkt.presenter.row.DayForecastView
