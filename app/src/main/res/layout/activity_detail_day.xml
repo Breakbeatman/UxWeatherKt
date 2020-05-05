@@ -6,22 +6,22 @@
     android:layout_height="match_parent">
 
     <include
-        android:id="@+id/toolbar"
+        android:id="@+id/activity_detail_day__toolbar"
         layout="@layout/toolbar" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/activity_detail_day__linearLayout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_day"
+        app:layout_constraintBottom_toTopOf="@+id/activity_detail_day__guideline_day"
         app:layout_constraintEnd_toEndOf="@+id/detail_day_fragment_container"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_day__toolbar"
         android:orientation="horizontal" />
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_day"
+        android:id="@+id/activity_detail_day__guideline_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -35,6 +35,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/activity_detail_day__linearLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

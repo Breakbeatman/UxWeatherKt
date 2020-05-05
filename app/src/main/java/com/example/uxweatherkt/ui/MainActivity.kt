@@ -2,7 +2,6 @@ package com.example.uxweatherkt.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.Observer
 import com.example.uxweatherkt.presenter.WeatherPresenterImpl
 import com.example.uxweatherkt.R
@@ -14,8 +13,6 @@ import com.example.uxweatherkt.presenter.row.DayForecastView
 class MainActivity : AppCompatActivity(), WeatherView, DailyForecastListFragment.Listener {
 
     private lateinit var weatherPresenter: WeatherPresenter
-    private var currentWeatherFragment: CurrentWeatherFragment? = null
-    private var dailyForecastListFragment: DailyForecastListFragment? = null
     private var retainedFragment: RetainedFragment? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,18 +21,9 @@ class MainActivity : AppCompatActivity(), WeatherView, DailyForecastListFragment
 
 //  TODO: init
 
-//        currentWeatherFragment =
-//            supportFragmentManager.findFragmentById(R.id.activity_main_fragment_1) as CurrentWeatherFragment
-//        dailyForecastListFragment =
-//            supportFragmentManager.findFragmentById(R.id.activity_main_fragment_2) as DailyForecastListFragment
-
-//        currentWeatherFragment = CurrentWeatherFragment()
-//        dailyForecastListFragment = DailyForecastListFragment()
 //                Получаем данные от retained fragment
         retainedFragment =
             supportFragmentManager.findFragmentByTag("weatherPresenter") as? RetainedFragment
-        currentWeatherFragment = CurrentWeatherFragment()
-        dailyForecastListFragment = DailyForecastListFragment()
 
         if (retainedFragment == null) {
             retainedFragment = RetainedFragment()
@@ -46,15 +34,15 @@ class MainActivity : AppCompatActivity(), WeatherView, DailyForecastListFragment
             retainedFragment!!.weatherPresenter = weatherPresenter
         }
         weatherPresenter = retainedFragment!!.weatherPresenter!!
-//          По тэгу:
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.activity_main_fragment_container, currentWeatherFragment!!).commit()
-        supportFragmentManager.beginTransaction()
-            .add(R.id.activity_main_fragment_container2, dailyForecastListFragment!!).commit()
-
-//        currentWeatherFragment = supportFragmentManager.findFragmentByTag("CurrentWeatherFragment") as? CurrentWeatherFragment
-//        dailyForecastListFragment = supportFragmentManager.findFragmentByTag("DailyWeatherFragment") as? DailyForecastListFragment
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.activity_main__fragment_container, CurrentWeatherFragment(), "fr1")
+                .commit()
+            supportFragmentManager.beginTransaction()
+                .add(R.id.activity_main__fragment_container2, DailyForecastListFragment(), "fr2")
+                .commit()
+        }
 
         weatherPresenter.attachView(this)
         weatherPresenter.getCurrentLiveData().observe(this, Observer
@@ -84,11 +72,15 @@ class MainActivity : AppCompatActivity(), WeatherView, DailyForecastListFragment
     }
 
     private fun currentWeatherDataLoaded(currentWeatherView: CurrentWeatherView) {
-        currentWeatherFragment!!.initData(currentWeatherView)
+        val currentWeatherFragment =
+            supportFragmentManager.findFragmentByTag("fr1") as CurrentWeatherFragment
+        currentWeatherFragment.initData(currentWeatherView)
     }
 
     private fun dailyForecastDataLoaded(dailyForecastView: ArrayList<DayForecastView>) {
-        dailyForecastListFragment!!.initData(dailyForecastView)
+        val dailyForecastListFragment =
+            supportFragmentManager.findFragmentByTag("fr2") as DailyForecastListFragment
+        dailyForecastListFragment.initData(dailyForecastView)
     }
 
     private fun saveData() {

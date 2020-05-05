@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/row_day_forecast_tvDate"
+        android:id="@+id/row_day_forecast__tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello"
@@ -14,37 +14,38 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/row_day_forecast_tvDayOfWeek"
+        android:id="@+id/row_day_forecast__tvDayOfWeek"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello"
         android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast_tvDate"
+        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvDate"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/row_day_forecast_tvTempMax"
+        android:id="@+id/row_day_forecast__tvTempMax"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello"
         android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast_tvDayOfWeek"
+        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvDayOfWeek"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/row_day_forecast_tvTempMin"
+        android:id="@+id/row_day_forecast__tvTempMin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello"
         android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast_tvTempMax"
+        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMax"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/row_day_forecast_ivWeather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast_tvTempMin"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMin"
+        app:layout_constraintStart_toStartOf="parent"
+        android:contentDescription="weather state" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

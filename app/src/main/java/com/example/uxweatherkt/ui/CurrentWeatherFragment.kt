@@ -29,13 +29,13 @@ class CurrentWeatherFragment : Fragment() {
     }
 
     fun initData(currentWeatherView: CurrentWeatherView) {
-        tvTemp = activity!!.findViewById(R.id.fragment_current_weather_tvTemp)
-        tvFeelLike = activity!!.findViewById(R.id.fragment_current_weather_tvFeelLike)
-        tvPressure = activity!!.findViewById(R.id.fragment_current_weather_tvPressure)
-        tvHumidity = activity!!.findViewById(R.id.fragment_current_weather_tvHumidity)
-        tvWindSpeed = activity!!.findViewById(R.id.fragment_current_weather_tvWindSpeed)
-        tvDescription = activity!!.findViewById(R.id.fragment_current_weather_tvDescription)
-        ivDescription = activity!!.findViewById(R.id.fragment_current_weather_ivDescription)
+        tvTemp = activity!!.findViewById(R.id.fragment_current_weather__tvTemp)
+        tvFeelLike = activity!!.findViewById(R.id.fragment_current_weather__tvFeelLike)
+        tvPressure = activity!!.findViewById(R.id.fragment_current_weather__tvPressure)
+        tvHumidity = activity!!.findViewById(R.id.fragment_current_weather__tvHumidity)
+        tvWindSpeed = activity!!.findViewById(R.id.fragment_current_weather__tvWindSpeed)
+        tvDescription = activity!!.findViewById(R.id.fragment_current_weather__tvDescription)
+        ivDescription = activity!!.findViewById(R.id.fragment_current_weather__ivDescription)
         tvTemp.text = currentWeatherView.temp
         tvFeelLike.text = currentWeatherView.feelLike
         tvPressure.text = currentWeatherView.pressure

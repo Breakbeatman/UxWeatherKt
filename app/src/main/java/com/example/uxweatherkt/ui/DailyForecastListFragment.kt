@@ -30,7 +30,7 @@ class DailyForecastListFragment : Fragment(), DailyForecastListAdapter.Listener 
         val view = inflater.inflate(R.layout.fragment_daily_forecast_list, container, false)
         val dailyForecastView = ArrayList<DayForecastView>()
         dailyForecastListAdapter = DailyForecastListAdapter(dailyForecastView, this)
-        val recyclerView: RecyclerView = view.findViewById(R.id.fragment_daily_forecast_list_recyclerView)
+        val recyclerView: RecyclerView = view.findViewById(R.id.fragment_daily_forecast_list__recyclerView)
         val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         recyclerView.adapter = dailyForecastListAdapter
         recyclerView.layoutManager = linearLayoutManager

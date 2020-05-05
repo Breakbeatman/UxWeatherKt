@@ -59,10 +59,10 @@ class DailyForecastListAdapter(
         val ivWeather: ImageView
 
         init {
-            tvDate = itemView.findViewById(R.id.row_day_forecast_tvDate)
-            tvDayOfWeek = itemView.findViewById(R.id.row_day_forecast_tvDayOfWeek)
-            tvMaxTemp = itemView.findViewById(R.id.row_day_forecast_tvTempMax)
-            tvMinTemp = itemView.findViewById(R.id.row_day_forecast_tvTempMin)
+            tvDate = itemView.findViewById(R.id.row_day_forecast__tvDate)
+            tvDayOfWeek = itemView.findViewById(R.id.row_day_forecast__tvDayOfWeek)
+            tvMaxTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMax)
+            tvMinTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMin)
             ivWeather = itemView.findViewById(R.id.row_day_forecast_ivWeather)
         }
     }
