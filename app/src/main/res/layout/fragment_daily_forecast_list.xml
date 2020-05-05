@@ -6,7 +6,7 @@
     tools:context=".ui.DailyForecastListFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/fragment_daily_forecast_list_recyclerView"
+        android:id="@+id/fragment_daily_forecast_list__recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
