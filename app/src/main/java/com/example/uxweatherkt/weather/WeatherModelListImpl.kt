@@ -6,19 +6,20 @@ import com.example.uxweatherkt.weather.model.HourForecast
 import com.example.uxweatherkt.weather.model.Weather
 
 // Заглушка
-class WeatherModelListImpl(private val listener: WeatherModelImpl.Listener) : WeatherModel {
+class WeatherModelListImpl : WeatherModel {
 
-    override fun loadCurrentWeather() {
-        listener.currentWeatherReady(currentWeatherList())
+    override fun loadCurrentWeather(): CurrentWeather {
+        return currentWeatherList()
     }
 
-    override fun loadHourlyForecast() {
-        TODO("Not yet implemented")
+    override fun loadHourlyForecast(): ArrayList<HourForecast> {
+        return hourlyForecast()
     }
 
-    override fun loadDailyForecast() {
-        listener.dailyForecastReady(dailyForecast())
+    override fun loadDailyForecast(): ArrayList<DayForecast> {
+        return dailyForecast()
     }
+
 
     private fun currentWeatherList(): CurrentWeather {
         return CurrentWeather(

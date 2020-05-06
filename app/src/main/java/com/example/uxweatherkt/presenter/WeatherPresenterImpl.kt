@@ -12,15 +12,19 @@ import com.example.uxweatherkt.weather.model.CurrentWeather
 import com.example.uxweatherkt.weather.model.DayForecast
 import com.example.uxweatherkt.weather.model.HourForecast
 
-class WeatherPresenterImpl : WeatherPresenter, WeatherModelImpl.Listener {
+class WeatherPresenterImpl : WeatherPresenter {
 
     private var weatherView: WeatherView? = null
-    private var weatherModel = WeatherModelListImpl(this)
+    private var weatherModel = WeatherModelListImpl()
     private var dataBinder = DataBinder()
 
     var currentWeatherData = MutableLiveData<CurrentWeatherView>()
     var hourlyForecastData = MutableLiveData<List<HourForecastView>>()
     var dailyForecastData = MutableLiveData<List<DayForecastView>>()
+
+    override fun getData() {
+        TODO("Not yet implemented")
+    }
 
     override fun attachView(weatherView: WeatherView) {
         this.weatherView = weatherView
@@ -30,42 +34,42 @@ class WeatherPresenterImpl : WeatherPresenter, WeatherModelImpl.Listener {
         weatherView = null
     }
 
-    override fun currentWeatherViewIsReady() {
+    fun currentWeatherViewIsReady() {
         weatherModel.loadCurrentWeather()
     }
 
-    override fun hourlyWeatherViewIsReady() {
+    fun hourlyWeatherViewIsReady() {
         weatherModel.loadHourlyForecast()
     }
 
-    override fun dailyWeatherViewIsReady() {
+    fun dailyWeatherViewIsReady() {
         weatherModel.loadDailyForecast()
     }
 
-    override fun currentWeatherReady(currentWeather: CurrentWeather) {
+    fun currentWeatherReady(currentWeather: CurrentWeather) {
         val currentWeatherView = dataBinder.bindCurrentWeatherView(currentWeather)
         currentWeatherData.postValue(currentWeatherView)
     }
 
-    override fun hourlyForecastReady(hourlyForecast: ArrayList<HourForecast>) {
+    fun hourlyForecastReady(hourlyForecast: ArrayList<HourForecast>) {
         val hourlyForecastView = dataBinder.bindHourlyForecastView(hourlyForecast)
         hourlyForecastData.postValue(hourlyForecastView)
     }
 
-    override fun dailyForecastReady(dailyForecast: ArrayList<DayForecast>) {
+    fun dailyForecastReady(dailyForecast: ArrayList<DayForecast>) {
         val dailyForecastView = dataBinder.bindDailyForecastView(dailyForecast)
         dailyForecastData.postValue(dailyForecastView)
     }
 
-    override fun getCurrentLiveData(): MutableLiveData<CurrentWeatherView> {
+    fun getCurrentLiveData(): MutableLiveData<CurrentWeatherView> {
         return currentWeatherData
     }
 
-    override fun getHourlyLiveData(): MutableLiveData<List<HourForecastView>> {
+    fun getHourlyLiveData(): MutableLiveData<List<HourForecastView>> {
         return hourlyForecastData
     }
 
-    override fun getDailyLiveData(): MutableLiveData<List<DayForecastView>> {
+    fun getDailyLiveData(): MutableLiveData<List<DayForecastView>> {
         return dailyForecastData
     }
 }

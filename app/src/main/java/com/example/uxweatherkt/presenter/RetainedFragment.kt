@@ -2,14 +2,15 @@ package com.example.uxweatherkt.presenter
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.example.uxweatherkt.ui.CurrentWeatherFragment
-import com.example.uxweatherkt.ui.DailyForecastListFragment
+import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenter
+import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastPresenter
+import com.example.uxweatherkt.ui.currentWeatherView.CurrentWeatherFragment
+import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastListFragment
 
 class RetainedFragment : Fragment() {
     // data object we want to retain
-    var weatherPresenter: WeatherPresenter? = null
-    var currentWeatherFragment: CurrentWeatherFragment? = null
-    var dailyForecastListFragment: DailyForecastListFragment? = null
+    var currentWeatherPresenter: CurrentWeatherPresenter? = null
+    var dailyForecastPresenter: DailyForecastPresenter? = null
 
     // this method is only called once for this fragment
     override fun onCreate(savedInstanceState: Bundle?) {
