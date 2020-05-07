@@ -6,17 +6,12 @@ import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
 
-class RemoteRequestMaker(val listener: Listener) {
-
-    interface Listener {
-        fun onRequestReady(requestTypeValue: String, response: JSONObject)
-    }
+class RemoteRequestMaker {
 
     private lateinit var url: URL
-    private lateinit var message: String
     private lateinit var builder: HttpUrl.Builder
 
-    fun makeRequest(requestTypeValue: String) {
+    fun makeRequest(requestTypeValue: String):JSONObject {
 
         builder = HttpUrl.parse(PROXY_PATH)!!.newBuilder()
 
@@ -29,17 +24,12 @@ class RemoteRequestMaker(val listener: Listener) {
         val request = Request.Builder()
             .url(url)
             .build()
-
-        okHttpClient.newCall(request).enqueue(object : Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                e.printStackTrace()
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                val responseW = JSONObject(response.body()!!.string())
-//                callback
-                listener.onRequestReady(requestTypeValue, responseW)
-            }
-        })
+        var response: Response? = null
+        try {
+            response = okHttpClient.newCall(request).execute()
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+        return JSONObject(response!!.body()!!.string())
     }
 }

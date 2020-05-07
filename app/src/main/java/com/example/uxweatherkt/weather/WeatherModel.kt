@@ -1,9 +1,13 @@
 package com.example.uxweatherkt.weather
 
+import com.example.uxweatherkt.weather.model.CurrentWeather
+import com.example.uxweatherkt.weather.model.DayForecast
+import com.example.uxweatherkt.weather.model.HourForecast
+
 interface WeatherModel {
-    fun loadCurrentWeather()
+    fun loadCurrentWeather(): CurrentWeather
 
-    fun loadHourlyForecast()
+    fun loadHourlyForecast(): ArrayList<HourForecast>
 
-    fun loadDailyForecast()
+    fun loadDailyForecast(): ArrayList<DayForecast>
 }

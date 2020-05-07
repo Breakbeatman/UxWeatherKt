@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.ui
+package com.example.uxweatherkt.ui.dailyForecastView
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,7 +27,9 @@ class DailyForecastListAdapter(
     ): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.row_day_forecast, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(
+            view
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

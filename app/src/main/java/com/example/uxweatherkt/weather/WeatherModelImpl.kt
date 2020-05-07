@@ -9,51 +9,53 @@ import com.example.uxweatherkt.weather.repository.RemoteRequestMaker
 import com.example.uxweatherkt.weather.util.WeatherJSONParser
 import org.json.JSONObject
 
-class WeatherModelImpl(private val listener: Listener) : WeatherModel, RemoteRequestMaker.Listener {
-
-    interface Listener {
-        //        Плохо что в интерфейсе 3 метода???
-        fun currentWeatherReady(currentWeather: CurrentWeather)
-        fun hourlyForecastReady(hourlyForecast: ArrayList<HourForecast>)
-        fun dailyForecastReady(dailyForecast: ArrayList<DayForecast>)
-    }
+class WeatherModelImpl : WeatherModel {
 
     private lateinit var currentWeather: CurrentWeather
     private lateinit var hourlyForecast: ArrayList<HourForecast>
     private lateinit var dailyForecast: ArrayList<DayForecast>
 
     private var weatherJSONParser = WeatherJSONParser()
-    private var remoteRequestMaker = RemoteRequestMaker(this)
+    private var remoteRequestMaker = RemoteRequestMaker()
 
-    override fun loadCurrentWeather() {
-        remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_CURRENT)
+    override fun loadCurrentWeather(): CurrentWeather{
+        val response = remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_CURRENT)
+        currentWeather =
+            weatherJSONParser.parseCurrentWeather(response)
+        return currentWeather
     }
 
-    override fun loadHourlyForecast() {
-        remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY)
+    override fun loadHourlyForecast(): ArrayList<HourForecast> {
+        val response = remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY)
+        hourlyForecast =
+            weatherJSONParser.parseHourlyWeather(response)
+        return hourlyForecast
     }
 
-    override fun loadDailyForecast() {
-        remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_DAILY)
+    override fun loadDailyForecast(): ArrayList<DayForecast> {
+        val response = remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_DAILY)
+        dailyForecast =
+            weatherJSONParser.parseDailyWeather(response)
+        return dailyForecast
     }
 
-    override fun onRequestReady(requestTypeValue: String, response: JSONObject) {
-        when (requestTypeValue) {
-            REQUEST_TYPE_VALUE_CURRENT -> {
-                currentWeather =
-                    weatherJSONParser.parseCurrentWeather(response)
-                listener.currentWeatherReady(currentWeather)
-            }
-            REQUEST_TYPE_VALUE_HOURLY -> {
-                hourlyForecast =
-                    weatherJSONParser.parseHourlyWeather(response)
-                listener.hourlyForecastReady(hourlyForecast)
-            }
-            REQUEST_TYPE_VALUE_DAILY -> {
-                dailyForecast =
-                    weatherJSONParser.parseDailyWeather(response)
-                listener.dailyForecastReady(dailyForecast)
-            }
-        }
-    }
+//    fun onRequestReady(requestTypeValue: String, response: JSONObject) {
+//        when (requestTypeValue) {
+//            REQUEST_TYPE_VALUE_CURRENT -> {
+//                currentWeather =
+//                    weatherJSONParser.parseCurrentWeather(response)
+//                listener.currentWeatherReady(currentWeather)
+//            }
+//            REQUEST_TYPE_VALUE_HOURLY -> {
+//                hourlyForecast =
+//                    weatherJSONParser.parseHourlyWeather(response)
+//                listener.hourlyForecastReady(hourlyForecast)
+//            }
+//            REQUEST_TYPE_VALUE_DAILY -> {
+//                dailyForecast =
+//                    weatherJSONParser.parseDailyWeather(response)
+//                listener.dailyForecastReady(dailyForecast)
+//            }
+//        }
+//    }
 }
