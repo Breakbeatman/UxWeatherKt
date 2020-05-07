@@ -8,13 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.App
 
 import com.example.uxweatherkt.R
-import com.example.uxweatherkt.presenter.RetainedFragment
 import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastPresenter
+import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastPresenterImpl
+import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastViewModel
 import com.example.uxweatherkt.presenter.row.DayForecastView
 import com.example.uxweatherkt.ui.WeatherView
 
@@ -25,7 +27,7 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         fun onDailyForecastListItemClicked()
     }
 
-    private lateinit var dailyForecastPresenter: DailyForecastPresenter
+    private var dailyForecastPresenter: DailyForecastPresenter? = null
 
     private lateinit var listener: Listener
     private lateinit var dailyForecastView: ArrayList<DayForecastView>
@@ -34,12 +36,19 @@ class DailyForecastListFragment : Fragment(), WeatherView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dailyForecastPresenter =
-            (activity!!.application as App).getDependencyRoot().dailyForecastPresenter
-        dailyForecastPresenter.attachView(this)
-        liveData = dailyForecastPresenter.getLiveData()
+        val viewModel = ViewModelProviders.of(this).get(DailyForecastViewModel::class.java)
+        dailyForecastPresenter = viewModel.dailyForecastPresenter
+        if (dailyForecastPresenter == null) {
+            val weatherModel = (activity!!.application as App).getDependencyRoot().weatherModel
+            val dailyForecastDataBinder =
+                (activity!!.application as App).getDependencyRoot().dailyWeatherDataBinder
+            dailyForecastPresenter =
+                DailyForecastPresenterImpl(weatherModel, dailyForecastDataBinder)
+        }
+        dailyForecastPresenter!!.attachView(this)
+        liveData = dailyForecastPresenter!!.getLiveData()
         liveData.observe(this, Observer { showWeather() })
-        dailyForecastPresenter.getData()
+        dailyForecastPresenter!!.getData()
     }
 
     override fun onCreateView(
@@ -59,6 +68,11 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         recyclerView.adapter = dailyForecastListAdapter
         recyclerView.layoutManager = linearLayoutManager
         return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        dailyForecastPresenter!!.detachView()
     }
 
     override fun showWeather() {

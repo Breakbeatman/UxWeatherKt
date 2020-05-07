@@ -14,8 +14,8 @@ class DependencyRoot {
     val iconBinder = IconBinder()
     val currentWeatherDataBinder = CurrentWeatherDataBinder(iconBinder)
     val dailyWeatherDataBinder = DailyForecastDataBinder(iconBinder)
-    val currentWeatherPresenter =
-        CurrentWeatherPresenterImpl(weatherModel, currentWeatherDataBinder)
-    val dailyForecastPresenter =
-        DailyForecastPresenterImpl(weatherModel, dailyWeatherDataBinder)
+//    val currentWeatherPresenter =
+//        CurrentWeatherPresenterImpl(weatherModel, currentWeatherDataBinder)
+//    val dailyForecastPresenter =
+//        DailyForecastPresenterImpl(weatherModel, dailyWeatherDataBinder)
 }
