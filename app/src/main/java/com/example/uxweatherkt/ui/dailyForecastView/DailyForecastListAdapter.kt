@@ -42,12 +42,10 @@ class DailyForecastListAdapter(
     }
 
     override fun getItemCount(): Int {
-        Log.d("TAG", "" + dailyForecastView.size)
         return dailyForecastView.size
     }
 
     fun setDailyForecast(dailyForecastView: ArrayList<DayForecastView>) {
-        Log.d("dailyForecast", dailyForecastView.toString())
         this.dailyForecastView.clear()
         this.dailyForecastView.addAll(dailyForecastView)
         notifyDataSetChanged()
