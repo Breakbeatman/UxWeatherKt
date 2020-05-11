@@ -1,11 +1,15 @@
 package com.example.uxweatherkt.ui.currentWeatherView
 
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -16,13 +20,16 @@ import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherV
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenter
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenterImpl
 import com.example.uxweatherkt.presenter.row.CurrentWeatherView
+import com.example.uxweatherkt.presenter.util.LocationFinder
 import com.example.uxweatherkt.ui.WeatherView
 
 
-class CurrentWeatherFragment : Fragment(), WeatherView {
+class CurrentWeatherFragment : Fragment(),
+    WeatherView {
 
     private var currentWeatherPresenter: CurrentWeatherPresenter? = null
 
+    private lateinit var locationFinder: LocationFinder
 
     private lateinit var liveData: MutableLiveData<CurrentWeatherView>
 
@@ -33,6 +40,7 @@ class CurrentWeatherFragment : Fragment(), WeatherView {
     private lateinit var tvWindSpeed: TextView
     private lateinit var tvDescription: TextView
     private lateinit var ivDescription: ImageView
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,14 +59,15 @@ class CurrentWeatherFragment : Fragment(), WeatherView {
         currentWeatherPresenter!!.attachView(this)
         liveData = currentWeatherPresenter!!.getLiveData()
         liveData.observe(this, Observer { showWeather() })
-        currentWeatherPresenter!!.getData()
+//        currentWeatherPresenter!!.getData()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_current_weather, container, false)
+        val view =  inflater.inflate(R.layout.fragment_current_weather, container, false)
+        return view
     }
 
     override fun onDestroy() {
@@ -66,17 +75,24 @@ class CurrentWeatherFragment : Fragment(), WeatherView {
         currentWeatherPresenter!!.detachView()
     }
 
+    //    TODO: зачем в интерфейсе???
     override fun showWeather() {
-        val currentWeatherView = liveData.value
-        initData(currentWeatherView)
+        hideLoading()
+        initData(liveData.value)
     }
 
     override fun showLoading() {
-        TODO("Not yet implemented")
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        TODO("Not yet implemented")
+        progressBar.visibility = View.GONE
+    }
+
+    fun onLocationReady(location: Location) {
+        progressBar = activity!!.findViewById(R.id.fragment_current_weather__pbLoading)
+        showLoading()
+        currentWeatherPresenter!!.getData(location)
     }
 
     private fun initData(currentWeatherView: CurrentWeatherView?) {

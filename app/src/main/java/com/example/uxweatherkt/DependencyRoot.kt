@@ -1,21 +1,23 @@
 package com.example.uxweatherkt
 
+import android.content.Context
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherDataBinder
-import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenterImpl
 import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastDataBinder
-import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastPresenterImpl
 import com.example.uxweatherkt.presenter.util.IconBinder
+import com.example.uxweatherkt.presenter.util.LocationFinder
+import com.example.uxweatherkt.ui.userLocation.UserLocation
 import com.example.uxweatherkt.weather.WeatherModelImpl
 import com.example.uxweatherkt.weather.WeatherModelListImpl
+import com.example.uxweatherkt.weather.util.WeatherJSONParser
 
 
-class DependencyRoot {
-    val weatherModel = WeatherModelListImpl()
-    val iconBinder = IconBinder()
+class DependencyRoot(context: Context) {
+    var weatherJSONParser = WeatherJSONParser()
+    val weatherModel = WeatherModelImpl(weatherJSONParser)
+    private val iconBinder = IconBinder()
     val currentWeatherDataBinder = CurrentWeatherDataBinder(iconBinder)
     val dailyWeatherDataBinder = DailyForecastDataBinder(iconBinder)
-//    val currentWeatherPresenter =
-//        CurrentWeatherPresenterImpl(weatherModel, currentWeatherDataBinder)
-//    val dailyForecastPresenter =
-//        DailyForecastPresenterImpl(weatherModel, dailyWeatherDataBinder)
+    val userLocation = UserLocation()
+    val locationFinder = LocationFinder(context, userLocation)
+
 }

@@ -9,31 +9,38 @@ import com.example.uxweatherkt.weather.repository.RemoteRequestMaker
 import com.example.uxweatherkt.weather.util.WeatherJSONParser
 import org.json.JSONObject
 
-class WeatherModelImpl : WeatherModel {
+class WeatherModelImpl(private val weatherJSONParser: WeatherJSONParser) : WeatherModel {
 
     private lateinit var currentWeather: CurrentWeather
     private lateinit var hourlyForecast: ArrayList<HourForecast>
     private lateinit var dailyForecast: ArrayList<DayForecast>
 
-    private var weatherJSONParser = WeatherJSONParser()
-    private var remoteRequestMaker = RemoteRequestMaker()
+    private lateinit var cRemoteRequestMaker: RemoteRequestMaker
+    private lateinit var hRemoteRequestMaker: RemoteRequestMaker
+    private lateinit var dRemoteRequestMaker: RemoteRequestMaker
 
-    override fun loadCurrentWeather(): CurrentWeather{
-        val response = remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_CURRENT)
+    override fun loadCurrentWeather(latitude: String, longitude: String): CurrentWeather {
+        cRemoteRequestMaker = RemoteRequestMaker()
+        val response =
+            cRemoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_CURRENT, latitude, longitude)
         currentWeather =
             weatherJSONParser.parseCurrentWeather(response)
         return currentWeather
     }
 
-    override fun loadHourlyForecast(): ArrayList<HourForecast> {
-        val response = remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY)
+    override fun loadHourlyForecast(latitude: String, longitude: String): ArrayList<HourForecast> {
+        hRemoteRequestMaker = RemoteRequestMaker()
+        val response =
+            hRemoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY, latitude, longitude)
         hourlyForecast =
             weatherJSONParser.parseHourlyWeather(response)
         return hourlyForecast
     }
 
-    override fun loadDailyForecast(): ArrayList<DayForecast> {
-        val response = remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_DAILY)
+    override fun loadDailyForecast(latitude: String, longitude: String): ArrayList<DayForecast> {
+        dRemoteRequestMaker = RemoteRequestMaker()
+        val response =
+            dRemoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_DAILY, latitude, longitude)
         dailyForecast =
             weatherJSONParser.parseDailyWeather(response)
         return dailyForecast

@@ -5,9 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.dailyForecastView.DailyForecastListFragment">
 
+    <ProgressBar
+        android:id="@+id/fragment_daily_forecast_list__pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/fragment_daily_forecast_list__recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </FrameLayout>

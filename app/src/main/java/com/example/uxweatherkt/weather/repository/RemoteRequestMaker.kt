@@ -11,11 +11,15 @@ class RemoteRequestMaker {
     private lateinit var url: URL
     private lateinit var builder: HttpUrl.Builder
 
-    fun makeRequest(requestTypeValue: String):JSONObject {
+    fun makeRequest(requestTypeValue: String, latitude: String, longitude: String):JSONObject {
 
         builder = HttpUrl.parse(PROXY_PATH)!!.newBuilder()
 
-        builder.addQueryParameter(CITY_NAME_KEY, "Murino")
+//        builder.addQueryParameter(CITY_NAME_KEY, "Murino")
+//            .addQueryParameter(REQUEST_TYPE_KEY, requestTypeValue)
+
+        builder.addQueryParameter(LATITUDE_KEY, latitude)
+            .addQueryParameter(LONGITUDE_KEY, longitude)
             .addQueryParameter(REQUEST_TYPE_KEY, requestTypeValue)
 
         url = builder.build().url()
@@ -30,6 +34,6 @@ class RemoteRequestMaker {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        return JSONObject(response!!.body()!!.string())
+        return JSONObject(response?.body()!!.string())
     }
 }
