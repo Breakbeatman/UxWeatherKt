@@ -1,5 +1,6 @@
 package com.example.uxweatherkt.presenter.hourlyForecastPresenter
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.row.HourForecastView
 import com.example.uxweatherkt.ui.WeatherView
@@ -14,7 +15,7 @@ class HourlyForecastPresenterImpl(
 
     private var liveData = MutableLiveData<List<HourForecastView>>()
 
-    override fun getData() {
+    override fun getData(location: Location) {
         TODO("Not yet implemented")
     }
 

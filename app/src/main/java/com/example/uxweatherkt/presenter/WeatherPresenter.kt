@@ -1,9 +1,10 @@
 package com.example.uxweatherkt.presenter
 
+import android.location.Location
 import com.example.uxweatherkt.ui.WeatherView
 
 interface WeatherPresenter {
-    fun getData()
+    fun getData(location: Location)
 
     fun attachView(weatherView: WeatherView)
 

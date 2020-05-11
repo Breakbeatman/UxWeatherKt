@@ -1,5 +1,6 @@
 package com.example.uxweatherkt.presenter.dailyForecast
 
+import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.row.DayForecastView
 import com.example.uxweatherkt.ui.WeatherView
@@ -15,10 +16,14 @@ class DailyForecastPresenterImpl(
 
     private var dailyForecastData = MutableLiveData<List<DayForecastView>>()
 
-    override fun getData() {
+    private lateinit var latitude: String
+    private lateinit var longitude: String
+
+    override fun getData(location: Location) {
+        initCoordinates(location)
         object : Thread() {
             override fun run() {
-                val dailyForecast = weatherModel.loadDailyForecast()
+                val dailyForecast = weatherModel.loadDailyForecast(latitude, longitude)
                 val dailyForecastView = dailyForecastDataBinder.bindDailyForecastView(dailyForecast)
                 dailyForecastData.postValue(dailyForecastView)
             }
@@ -39,5 +44,10 @@ class DailyForecastPresenterImpl(
 
     override fun onDailyForecastListItemClicked() {
         TODO("Not yet implemented")
+    }
+
+    private fun initCoordinates(location: Location) {
+        latitude = location.latitude.toString()
+        longitude = location.longitude.toString()
     }
 }

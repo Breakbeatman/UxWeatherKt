@@ -1,11 +1,12 @@
 package com.example.uxweatherkt.ui.dailyForecastView
 
-
+import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -20,7 +21,7 @@ import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastViewModel
 import com.example.uxweatherkt.presenter.row.DayForecastView
 import com.example.uxweatherkt.ui.WeatherView
 
-class DailyForecastListFragment : Fragment(), WeatherView,
+class DailyForecastListFragment() : Fragment(), WeatherView,
     DailyForecastListAdapter.Listener {
 
     interface Listener {
@@ -33,6 +34,7 @@ class DailyForecastListFragment : Fragment(), WeatherView,
     private lateinit var dailyForecastView: ArrayList<DayForecastView>
     private lateinit var dailyForecastListAdapter: DailyForecastListAdapter
     private lateinit var liveData: MutableLiveData<List<DayForecastView>>
+    private lateinit var progressBar: ProgressBar
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         dailyForecastPresenter!!.attachView(this)
         liveData = dailyForecastPresenter!!.getLiveData()
         liveData.observe(this, Observer { showWeather() })
-        dailyForecastPresenter!!.getData()
+//        dailyForecastPresenter!!.getData()
     }
 
     override fun onCreateView(
@@ -76,20 +78,26 @@ class DailyForecastListFragment : Fragment(), WeatherView,
     }
 
     override fun showWeather() {
-        val dailyForecastView = liveData.value as ArrayList
-        initData(dailyForecastView)
+        hideLoading()
+        initData(liveData.value as ArrayList)
     }
 
     override fun showLoading() {
-        TODO("Not yet implemented")
+        progressBar.visibility = View.VISIBLE
     }
 
     override fun hideLoading() {
-        TODO("Not yet implemented")
+        progressBar.visibility = View.GONE
     }
 
     override fun onDayForecastClick() {
         TODO("Not yet implemented")
+    }
+
+    fun onLocationReady(location: Location) {
+        progressBar = activity!!.findViewById(R.id.fragment_daily_forecast_list__pbLoading)
+        showLoading()
+        dailyForecastPresenter!!.getData(location)
     }
 
     private fun initData(dailyForecastView: ArrayList<DayForecastView>) {
