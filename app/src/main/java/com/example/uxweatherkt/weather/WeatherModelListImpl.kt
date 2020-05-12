@@ -23,7 +23,7 @@ class WeatherModelListImpl : WeatherModel {
 
     private fun currentWeatherList(): CurrentWeather {
         return CurrentWeather(
-            Weather(800, "what"),
+            Weather(1000, "what"),
             "d",
             123.0,
             123.0,
@@ -35,7 +35,19 @@ class WeatherModelListImpl : WeatherModel {
 
     private fun hourlyForecast(): ArrayList<HourForecast> {
         val list = ArrayList<HourForecast>()
-//        TODO: добавить заглушку
+        for (i in 0..10) {
+            val hourForecast = HourForecast(
+                Weather(800, "hello"),
+                "d",
+                123123123123,
+                123.0,
+                123.0,
+                123.0,
+                123.0,
+                123.0
+            )
+            list.add(hourForecast)
+        }
         return list
     }
 

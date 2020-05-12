@@ -29,10 +29,9 @@ class CurrentWeatherFragment : Fragment(),
 
     private var currentWeatherPresenter: CurrentWeatherPresenter? = null
 
-    private lateinit var locationFinder: LocationFinder
-
     private lateinit var liveData: MutableLiveData<CurrentWeatherView>
 
+    private lateinit var tvDataIsNotAvailable: TextView
     private lateinit var tvTemp: TextView
     private lateinit var tvFeelLike: TextView
     private lateinit var tvPressure: TextView
@@ -44,6 +43,58 @@ class CurrentWeatherFragment : Fragment(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        presenter initialization and attach with WeatherView (this fragment)
+        initPresenter()
+        liveData = currentWeatherPresenter!!.getLiveData()
+        liveData.observe(this, Observer { showWeather() })
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_current_weather, container, false)
+//        initialization of all views in layout (fragment_current_weather)
+        init(view)
+        return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        currentWeatherPresenter!!.detachView()
+    }
+
+    override fun showWeather() {
+        hideLoading()
+        if (liveData.value == null) {
+            dataIsNotAvailable()
+            return
+        }
+        initData(liveData.value)
+    }
+
+    override fun dataIsNotAvailable() {
+        val stringing = "DATA IS NOT AVAILABLE"
+        tvDataIsNotAvailable =
+            view!!.findViewById((R.id.fragment_current_weather__tvDataIsNotAvailable))
+        tvDataIsNotAvailable.text = stringing
+    }
+
+    override fun showLoading() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    override fun hideLoading() {
+        progressBar.visibility = View.GONE
+    }
+
+    fun onLocationReady(location: Location) {
+        progressBar = view!!.findViewById(R.id.fragment_current_weather__pbLoading)
+        showLoading()
+        currentWeatherPresenter!!.getData(location)
+    }
+
+    private fun initPresenter() {
         val viewModel: CurrentWeatherViewModel =
             ViewModelProviders.of(this)
                 .get(CurrentWeatherViewModel::class.java)
@@ -57,52 +108,20 @@ class CurrentWeatherFragment : Fragment(),
                 CurrentWeatherPresenterImpl(weatherModel, currentWeatherDataBinder)
         }
         currentWeatherPresenter!!.attachView(this)
-        liveData = currentWeatherPresenter!!.getLiveData()
-        liveData.observe(this, Observer { showWeather() })
-//        currentWeatherPresenter!!.getData()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view =  inflater.inflate(R.layout.fragment_current_weather, container, false)
-        return view
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        currentWeatherPresenter!!.detachView()
-    }
-
-    //    TODO: зачем в интерфейсе???
-    override fun showWeather() {
-        hideLoading()
-        initData(liveData.value)
-    }
-
-    override fun showLoading() {
-        progressBar.visibility = View.VISIBLE
-    }
-
-    override fun hideLoading() {
-        progressBar.visibility = View.GONE
-    }
-
-    fun onLocationReady(location: Location) {
-        progressBar = activity!!.findViewById(R.id.fragment_current_weather__pbLoading)
-        showLoading()
-        currentWeatherPresenter!!.getData(location)
+    private fun init(view: View) {
+        tvTemp = view.findViewById(R.id.fragment_current_weather__tvTemp)
+        tvFeelLike = view.findViewById(R.id.fragment_current_weather__tvFeelLike)
+        tvPressure = view.findViewById(R.id.fragment_current_weather__tvPressure)
+        tvHumidity = view.findViewById(R.id.fragment_current_weather__tvHumidity)
+        tvWindSpeed = view.findViewById(R.id.fragment_current_weather__tvWindSpeed)
+        tvDescription = view.findViewById(R.id.fragment_current_weather__tvDescription)
+        ivDescription = view.findViewById(R.id.fragment_current_weather__ivDescription)
+        progressBar = view.findViewById(R.id.fragment_current_weather__pbLoading)
     }
 
     private fun initData(currentWeatherView: CurrentWeatherView?) {
-        tvTemp = activity!!.findViewById(R.id.fragment_current_weather__tvTemp)
-        tvFeelLike = activity!!.findViewById(R.id.fragment_current_weather__tvFeelLike)
-        tvPressure = activity!!.findViewById(R.id.fragment_current_weather__tvPressure)
-        tvHumidity = activity!!.findViewById(R.id.fragment_current_weather__tvHumidity)
-        tvWindSpeed = activity!!.findViewById(R.id.fragment_current_weather__tvWindSpeed)
-        tvDescription = activity!!.findViewById(R.id.fragment_current_weather__tvDescription)
-        ivDescription = activity!!.findViewById(R.id.fragment_current_weather__ivDescription)
         tvTemp.text = currentWeatherView!!.temp
         tvFeelLike.text = currentWeatherView.feelLike
         tvPressure.text = currentWeatherView.pressure
