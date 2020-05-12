@@ -19,10 +19,11 @@ class LocationFinder(
 
     interface Listener {
         fun onLocationReady(location: Location)
+        fun doNotHavePermission()
     }
 
     private lateinit var locationManager: LocationManager
-    private lateinit var listener: Listener
+    private var listener: Listener? = null
 
     fun findLocation(locationManager: LocationManager, listener: Listener) {
         this.listener = listener
@@ -35,13 +36,7 @@ class LocationFinder(
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            //stop loading???
-            locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                10,
-                100f,
-                locationListener
-            )
+            listener.doNotHavePermission()
         } else {
             // Permission has already been granted
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
@@ -90,9 +85,11 @@ class LocationFinder(
     private fun onLocationReady(location: Location) {
         Log.d(
             "LocationFinder",
-            location.latitude.toString() + "_______" + location.longitude.toString()
+            location.latitude.toString() + "_______*_______" + location.longitude.toString()
         )
-        listener.onLocationReady(location)
+        listener!!.onLocationReady(location)
+//        удаляем ссылку на MainActivity
+        listener = null
         locationManager.removeUpdates(locationListener)
         userLocation.location = location
     }

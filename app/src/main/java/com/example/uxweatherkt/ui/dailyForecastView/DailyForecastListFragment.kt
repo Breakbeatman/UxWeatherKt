@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -21,7 +22,7 @@ import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastViewModel
 import com.example.uxweatherkt.presenter.row.DayForecastView
 import com.example.uxweatherkt.ui.WeatherView
 
-class DailyForecastListFragment() : Fragment(), WeatherView,
+class DailyForecastListFragment : Fragment(), WeatherView,
     DailyForecastListAdapter.Listener {
 
     interface Listener {
@@ -38,19 +39,9 @@ class DailyForecastListFragment() : Fragment(), WeatherView,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val viewModel = ViewModelProviders.of(this).get(DailyForecastViewModel::class.java)
-        dailyForecastPresenter = viewModel.dailyForecastPresenter
-        if (dailyForecastPresenter == null) {
-            val weatherModel = (activity!!.application as App).getDependencyRoot().weatherModel
-            val dailyForecastDataBinder =
-                (activity!!.application as App).getDependencyRoot().dailyWeatherDataBinder
-            dailyForecastPresenter =
-                DailyForecastPresenterImpl(weatherModel, dailyForecastDataBinder)
-        }
-        dailyForecastPresenter!!.attachView(this)
+        initPresenter()
         liveData = dailyForecastPresenter!!.getLiveData()
         liveData.observe(this, Observer { showWeather() })
-//        dailyForecastPresenter!!.getData()
     }
 
     override fun onCreateView(
@@ -58,17 +49,7 @@ class DailyForecastListFragment() : Fragment(), WeatherView,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_daily_forecast_list, container, false)
-        val dailyForecastView = ArrayList<DayForecastView>()
-        dailyForecastListAdapter =
-            DailyForecastListAdapter(
-                dailyForecastView,
-                this
-            )
-        val recyclerView: RecyclerView =
-            view.findViewById(R.id.fragment_daily_forecast_list__recyclerView)
-        val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = dailyForecastListAdapter
-        recyclerView.layoutManager = linearLayoutManager
+        init(view)
         return view
     }
 
@@ -79,7 +60,15 @@ class DailyForecastListFragment() : Fragment(), WeatherView,
 
     override fun showWeather() {
         hideLoading()
+        if (liveData.value == null) {
+            dataIsNotAvailable()
+            return
+        }
         initData(liveData.value as ArrayList)
+    }
+
+    override fun dataIsNotAvailable() {
+        Toast.makeText(activity, "asdasd", Toast.LENGTH_SHORT).show()
     }
 
     override fun showLoading() {
@@ -98,6 +87,33 @@ class DailyForecastListFragment() : Fragment(), WeatherView,
         progressBar = activity!!.findViewById(R.id.fragment_daily_forecast_list__pbLoading)
         showLoading()
         dailyForecastPresenter!!.getData(location)
+    }
+
+    private fun initPresenter() {
+        val viewModel = ViewModelProviders.of(this).get(DailyForecastViewModel::class.java)
+        dailyForecastPresenter = viewModel.dailyForecastPresenter
+        if (dailyForecastPresenter == null) {
+            val weatherModel = (activity!!.application as App).getDependencyRoot().weatherModel
+            val dailyForecastDataBinder =
+                (activity!!.application as App).getDependencyRoot().dailyWeatherDataBinder
+            dailyForecastPresenter =
+                DailyForecastPresenterImpl(weatherModel, dailyForecastDataBinder)
+        }
+        dailyForecastPresenter!!.attachView(this)
+    }
+
+    private fun init(view: View) {
+        val dailyForecastView = ArrayList<DayForecastView>()
+        dailyForecastListAdapter =
+            DailyForecastListAdapter(
+                dailyForecastView,
+                this
+            )
+        val recyclerView: RecyclerView =
+            view.findViewById(R.id.fragment_daily_forecast_list__recyclerView)
+        val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        recyclerView.adapter = dailyForecastListAdapter
+        recyclerView.layoutManager = linearLayoutManager
     }
 
     private fun initData(dailyForecastView: ArrayList<DayForecastView>) {

@@ -5,9 +5,9 @@ import com.example.uxweatherkt.weather.model.DayForecast
 import com.example.uxweatherkt.weather.model.HourForecast
 
 interface WeatherModel {
-    fun loadCurrentWeather(latitude: String, longitude: String): CurrentWeather
+    fun loadCurrentWeather(latitude: String, longitude: String): CurrentWeather?
 
-    fun loadHourlyForecast(latitude: String, longitude: String): ArrayList<HourForecast>
+    fun loadHourlyForecast(latitude: String, longitude: String): ArrayList<HourForecast>?
 
-    fun loadDailyForecast(latitude: String, longitude: String): ArrayList<DayForecast>
+    fun loadDailyForecast(latitude: String, longitude: String): ArrayList<DayForecast>?
 }

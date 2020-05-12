@@ -35,13 +35,7 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
                 Manifest.permission.ACCESS_COARSE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ), MY_PERMISSIONS_FINE_LOCATION
-            )
+            getUserPermission()
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -55,6 +49,11 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
 //            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, locationListener)
         }
         //  TODO: init
+        initFragments(savedInstanceState)
+    }
+
+    override fun onStart() {
+        super.onStart()
         userLocation = (application as App).getDependencyRoot().userLocation
         if (userLocation.location == null) {
             locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -63,7 +62,6 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
         } else {
             onLocationReady(userLocation.location as Location)
         }
-        initFragments(savedInstanceState)
     }
 
     override fun onRequestPermissionsResult(
@@ -80,6 +78,20 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
 
             }
         }
+    }
+
+    override fun onLocationReady(location: Location) {
+        val currentWeatherFragment: CurrentWeatherFragment = supportFragmentManager.findFragmentByTag("fr1") as CurrentWeatherFragment
+        currentWeatherFragment.onLocationReady(
+            location
+        )
+        (supportFragmentManager.findFragmentByTag("fr2") as DailyForecastListFragment).onLocationReady(
+            location
+        )
+    }
+
+    override fun doNotHavePermission() {
+        getUserPermission()
     }
 
     private fun initFragments(savedInstanceState: Bundle?) {
@@ -99,12 +111,13 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
         }
     }
 
-    override fun onLocationReady(location: Location) {
-        (supportFragmentManager.findFragmentByTag("fr1") as CurrentWeatherFragment).onLocationReady(
-            location
-        )
-        (supportFragmentManager.findFragmentByTag("fr2") as DailyForecastListFragment).onLocationReady(
-            location
+    private fun getUserPermission() {
+        ActivityCompat.requestPermissions(
+            this,
+            arrayOf(
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ), MY_PERMISSIONS_FINE_LOCATION
         )
     }
 }

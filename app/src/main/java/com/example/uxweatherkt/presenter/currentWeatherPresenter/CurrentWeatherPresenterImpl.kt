@@ -26,6 +26,10 @@ class CurrentWeatherPresenterImpl(
             object : Thread() {
                 override fun run() {
                     val currentWeather = weatherModel.loadCurrentWeather(latitude, longitude)
+                    if (currentWeather == null) {
+                        currentWeatherData.postValue(null)
+                        return
+                    }
                     currentWeatherView =
                         currentWeatherDataBinder.bindCurrentWeatherView(currentWeather)
                     currentWeatherData.postValue(currentWeatherView)

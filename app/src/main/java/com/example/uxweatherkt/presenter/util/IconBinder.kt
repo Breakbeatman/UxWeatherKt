@@ -30,7 +30,7 @@ class IconBinder {
             //            //broken clouds
             804 -> "804$pod"
             //            //unknown weather
-            else -> "1000"
+            else -> "1000$pod"
         }.toString()
     }
 
@@ -54,8 +54,7 @@ class IconBinder {
             "803n" -> R.drawable.scattered_clouds_803n
             "804d" -> R.drawable.brocken_clouds_804d
             "804n" -> R.drawable.brocken_clouds_804n
-//            TODO: нет картинки неизвестного кода
-            else -> 1000
+            else -> R.drawable.unknow_weather_1000d
         }
     }
 }

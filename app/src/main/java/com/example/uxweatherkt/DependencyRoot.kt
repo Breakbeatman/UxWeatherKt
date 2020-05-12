@@ -13,7 +13,7 @@ import com.example.uxweatherkt.weather.util.WeatherJSONParser
 
 class DependencyRoot(context: Context) {
     var weatherJSONParser = WeatherJSONParser()
-    val weatherModel = WeatherModelImpl(weatherJSONParser)
+    val weatherModel = WeatherModelListImpl()
     private val iconBinder = IconBinder()
     val currentWeatherDataBinder = CurrentWeatherDataBinder(iconBinder)
     val dailyWeatherDataBinder = DailyForecastDataBinder(iconBinder)
