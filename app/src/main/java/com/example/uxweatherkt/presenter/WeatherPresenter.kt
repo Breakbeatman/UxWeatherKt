@@ -6,6 +6,8 @@ import com.example.uxweatherkt.ui.WeatherView
 interface WeatherPresenter {
     fun getData(location: Location)
 
+    fun getData(cityName: String)
+
     fun attachView(weatherView: WeatherView)
 
     fun detachView()

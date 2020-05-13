@@ -94,6 +94,12 @@ class CurrentWeatherFragment : Fragment(),
         currentWeatherPresenter!!.getData(location)
     }
 
+    fun onCityNameReady(cityName: String) {
+        progressBar = view!!.findViewById(R.id.fragment_current_weather__pbLoading)
+        showLoading()
+        currentWeatherPresenter!!.getData(cityName)
+    }
+
     private fun initPresenter() {
         val viewModel: CurrentWeatherViewModel =
             ViewModelProviders.of(this)

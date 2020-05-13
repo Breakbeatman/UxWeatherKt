@@ -89,6 +89,12 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         dailyForecastPresenter!!.getData(location)
     }
 
+    fun onCityNameReady(cityName: String) {
+        progressBar = activity!!.findViewById(R.id.fragment_daily_forecast_list__pbLoading)
+        showLoading()
+        dailyForecastPresenter!!.getData(cityName)
+    }
+
     private fun initPresenter() {
         val viewModel = ViewModelProviders.of(this).get(DailyForecastViewModel::class.java)
         dailyForecastPresenter = viewModel.dailyForecastPresenter

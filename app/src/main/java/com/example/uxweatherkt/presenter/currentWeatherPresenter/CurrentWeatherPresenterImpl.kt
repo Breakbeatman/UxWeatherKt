@@ -2,7 +2,6 @@ package com.example.uxweatherkt.presenter.currentWeatherPresenter
 
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
-import com.example.uxweatherkt.App
 import com.example.uxweatherkt.presenter.row.CurrentWeatherView
 import com.example.uxweatherkt.ui.WeatherView
 import com.example.uxweatherkt.weather.WeatherModel
@@ -25,7 +24,26 @@ class CurrentWeatherPresenterImpl(
         if (currentWeatherView == null) {
             object : Thread() {
                 override fun run() {
-                    val currentWeather = weatherModel.loadCurrentWeather(latitude, longitude)
+                    val currentWeather = weatherModel.loadCurrentWeatherBy(latitude, longitude)
+                    if (currentWeather == null) {
+                        currentWeatherData.postValue(null)
+                        return
+                    }
+                    currentWeatherView =
+                        currentWeatherDataBinder.bindCurrentWeatherView(currentWeather)
+                    currentWeatherData.postValue(currentWeatherView)
+                }
+            }.start()
+        } else {
+            currentWeatherData.postValue(currentWeatherView)
+        }
+    }
+
+    override fun getData(cityName: String) {
+        if (currentWeatherView == null) {
+            object : Thread() {
+                override fun run() {
+                    val currentWeather = weatherModel.loadCurrentWeatherBy(cityName)
                     if (currentWeather == null) {
                         currentWeatherData.postValue(null)
                         return

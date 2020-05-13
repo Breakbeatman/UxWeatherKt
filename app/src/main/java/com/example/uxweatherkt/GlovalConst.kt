@@ -2,7 +2,10 @@ package com.example.uxweatherkt
 
 const val MY_PERMISSIONS_FINE_LOCATION = 1
 
-const val PROXY_PATH = "http://192.168.1.100:4567/forecast/bylocation"
+const val CURRENT_WEATHER_FRAGMENT_TAG = "fragment_current_weather"
+const val DAILY_FORECAST_FRAGMENT_TAG = "fragment_daily_forecast"
+
+const val PROXY_PATH = "http://192.168.1.100:4567/forecast/"
 
 const val REQUEST_PARAM_BY_LOCATION = "bylocation"
 const val REQUEST_PARAM_BY_CITY_NAME = "bycityname"

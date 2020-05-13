@@ -1,7 +1,6 @@
 package com.example.uxweatherkt.presenter.dailyForecast
 
 import android.location.Location
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.row.DayForecastView
 import com.example.uxweatherkt.ui.WeatherView
@@ -14,6 +13,7 @@ class DailyForecastPresenterImpl(
 ) : DailyForecastPresenter, DailyForecastListFragment.Listener {
 
     private var weatherView: WeatherView? = null
+    private var dailyForecastView: ArrayList<DayForecastView>? = null
 
     private var dailyForecastData = MutableLiveData<List<DayForecastView>>()
 
@@ -22,17 +22,39 @@ class DailyForecastPresenterImpl(
 
     override fun getData(location: Location) {
         initCoordinates(location)
-        object : Thread() {
-            override fun run() {
-                val dailyForecast = weatherModel.loadDailyForecast(latitude, longitude)
-                if (dailyForecast == null) {
-                    dailyForecastData.postValue(null)
-                    return
+        if (dailyForecastView == null) {
+            object : Thread() {
+                override fun run() {
+                    val dailyForecast = weatherModel.loadDailyForecastBy(latitude, longitude)
+                    if (dailyForecast == null) {
+                        dailyForecastData.postValue(null)
+                        return
+                    }
+                    dailyForecastView = dailyForecastDataBinder.bindDailyForecastView(dailyForecast)
+                    dailyForecastData.postValue(dailyForecastView)
                 }
-                val dailyForecastView = dailyForecastDataBinder.bindDailyForecastView(dailyForecast)
-                dailyForecastData.postValue(dailyForecastView)
-            }
-        }.start()
+            }.start()
+        } else {
+            dailyForecastData.postValue(dailyForecastView)
+        }
+    }
+
+    override fun getData(cityName: String) {
+        if (dailyForecastView == null) {
+            object : Thread() {
+                override fun run() {
+                    val dailyForecast = weatherModel.loadDailyForecastBy(cityName)
+                    if (dailyForecast == null) {
+                        dailyForecastData.postValue(null)
+                        return
+                    }
+                    dailyForecastView = dailyForecastDataBinder.bindDailyForecastView(dailyForecast)
+                    dailyForecastData.postValue(dailyForecastView)
+                }
+            }.start()
+        } else {
+            dailyForecastData.postValue(dailyForecastView)
+        }
     }
 
     override fun getLiveData(): MutableLiveData<List<DayForecastView>> {
