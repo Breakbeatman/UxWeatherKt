@@ -1,6 +1,5 @@
 package com.example.uxweatherkt.weather
 
-import android.util.Log
 import com.example.uxweatherkt.*
 import com.example.uxweatherkt.weather.model.CurrentWeather
 import com.example.uxweatherkt.weather.model.DayForecast
@@ -8,22 +7,17 @@ import com.example.uxweatherkt.weather.model.HourForecast
 
 import com.example.uxweatherkt.weather.repository.RemoteRequestMaker
 import com.example.uxweatherkt.weather.util.WeatherJSONParser
-import org.json.JSONObject
 
-class WeatherModelImpl(private val weatherJSONParser: WeatherJSONParser) : WeatherModel {
+class WeatherModelImpl(
+    private val weatherJSONParser: WeatherJSONParser,
+    private val remoteRequestMaker: RemoteRequestMaker
+) : WeatherModel {
 
     private lateinit var currentWeather: CurrentWeather
     private lateinit var hourlyForecast: ArrayList<HourForecast>
     private lateinit var dailyForecast: ArrayList<DayForecast>
 
-    private lateinit var cRemoteRequestMaker: RemoteRequestMaker
-    private lateinit var hRemoteRequestMaker: RemoteRequestMaker
-    private lateinit var dRemoteRequestMaker: RemoteRequestMaker
-    private lateinit var remoteRequestMaker: RemoteRequestMaker
-
-    override fun loadCurrentWeather(latitude: String, longitude: String): CurrentWeather? {
-        Log.d("TAG", "THREAD NOW" + Thread.currentThread().name)
-        remoteRequestMaker = RemoteRequestMaker()
+    override fun loadCurrentWeatherBy(latitude: String, longitude: String): CurrentWeather? {
         val response =
             remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_CURRENT, latitude, longitude)
                 ?: return null
@@ -32,8 +26,19 @@ class WeatherModelImpl(private val weatherJSONParser: WeatherJSONParser) : Weath
         return currentWeather
     }
 
-    override fun loadHourlyForecast(latitude: String, longitude: String): ArrayList<HourForecast>? {
-        remoteRequestMaker = RemoteRequestMaker()
+    override fun loadCurrentWeatherBy(cityName: String): CurrentWeather? {
+        val response =
+            remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_CURRENT, cityName)
+                ?: return null
+        currentWeather =
+            weatherJSONParser.parseCurrentWeather(response)
+        return currentWeather
+    }
+
+    override fun loadHourlyForecastBy(
+        latitude: String,
+        longitude: String
+    ): ArrayList<HourForecast>? {
         val response =
             remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY, latitude, longitude)
         hourlyForecast =
@@ -41,11 +46,22 @@ class WeatherModelImpl(private val weatherJSONParser: WeatherJSONParser) : Weath
         return hourlyForecast
     }
 
-    override fun loadDailyForecast(latitude: String, longitude: String): ArrayList<DayForecast>? {
-        Log.d("TAG", "THREAD NOW" + Thread.currentThread().name)
-        remoteRequestMaker = RemoteRequestMaker()
+    override fun loadHourlyForecastBy(cityName: String): ArrayList<HourForecast>? {
+        TODO("Not yet implemented")
+    }
+
+    override fun loadDailyForecastBy(latitude: String, longitude: String): ArrayList<DayForecast>? {
         val response =
             remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_DAILY, latitude, longitude)
+                ?: return null
+        dailyForecast =
+            weatherJSONParser.parseDailyWeather(response)
+        return dailyForecast
+    }
+
+    override fun loadDailyForecastBy(cityName: String): ArrayList<DayForecast>? {
+        val response =
+            remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_DAILY, cityName)
                 ?: return null
         dailyForecast =
             weatherJSONParser.parseDailyWeather(response)

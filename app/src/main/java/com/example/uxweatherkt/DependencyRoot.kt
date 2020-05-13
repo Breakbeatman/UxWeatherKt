@@ -8,11 +8,14 @@ import com.example.uxweatherkt.presenter.util.LocationFinder
 import com.example.uxweatherkt.ui.userLocation.UserLocation
 import com.example.uxweatherkt.weather.WeatherModelImpl
 import com.example.uxweatherkt.weather.WeatherModelListImpl
+import com.example.uxweatherkt.weather.repository.RemoteRequestMaker
 import com.example.uxweatherkt.weather.util.WeatherJSONParser
 
 
 class DependencyRoot(context: Context) {
-    var weatherJSONParser = WeatherJSONParser()
+    private val weatherJSONParser = WeatherJSONParser()
+    private val remoteRequestMaker = RemoteRequestMaker()
+//    val weatherModel = WeatherModelImpl(weatherJSONParser, remoteRequestMaker)
     val weatherModel = WeatherModelListImpl()
     private val iconBinder = IconBinder()
     val currentWeatherDataBinder = CurrentWeatherDataBinder(iconBinder)

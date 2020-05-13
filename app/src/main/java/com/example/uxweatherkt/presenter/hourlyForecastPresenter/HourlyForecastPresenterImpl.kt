@@ -19,6 +19,10 @@ class HourlyForecastPresenterImpl(
         TODO("Not yet implemented")
     }
 
+    override fun getData(cityName: String) {
+        TODO("Not yet implemented")
+    }
+
     override fun getLiveData(): MutableLiveData<List<HourForecastView>> {
         return liveData
     }

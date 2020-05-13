@@ -8,15 +8,27 @@ import com.example.uxweatherkt.weather.model.Weather
 // Заглушка
 class WeatherModelListImpl : WeatherModel {
 
-    override fun loadCurrentWeather(latitude: String, longitude: String): CurrentWeather {
+    override fun loadCurrentWeatherBy(latitude: String, longitude: String): CurrentWeather {
         return currentWeatherList()
     }
 
-    override fun loadHourlyForecast(latitude: String, longitude: String): ArrayList<HourForecast> {
+    override fun loadCurrentWeatherBy(cityName: String): CurrentWeather? {
+        return currentWeatherList()
+    }
+
+    override fun loadHourlyForecastBy(latitude: String, longitude: String): ArrayList<HourForecast> {
         return hourlyForecast()
     }
 
-    override fun loadDailyForecast(latitude: String, longitude: String): ArrayList<DayForecast> {
+    override fun loadHourlyForecastBy(cityName: String): ArrayList<HourForecast>? {
+        return hourlyForecast()
+    }
+
+    override fun loadDailyForecastBy(latitude: String, longitude: String): ArrayList<DayForecast> {
+        return dailyForecast()
+    }
+
+    override fun loadDailyForecastBy(cityName: String): ArrayList<DayForecast>? {
         return dailyForecast()
     }
 
