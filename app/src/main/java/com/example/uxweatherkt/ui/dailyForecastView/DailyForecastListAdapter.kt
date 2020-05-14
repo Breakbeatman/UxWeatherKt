@@ -1,6 +1,5 @@
 package com.example.uxweatherkt.ui.dailyForecastView
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,15 +9,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
 import com.example.uxweatherkt.presenter.row.DayForecastView
 
-class DailyForecastListAdapter(
-
-    var dailyForecastView: ArrayList<DayForecastView>,
-    var listener: Listener
-) :
+class DailyForecastListAdapter(var listener: Listener) :
     RecyclerView.Adapter<DailyForecastListAdapter.ViewHolder>() {
 
+    private var dailyForecastView: ArrayList<DayForecastView> = ArrayList()
+
     interface Listener {
-        fun onDayForecastClick()
+        fun onDayForecastClick(dayForecastView: DayForecastView)
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
     }
 
     override fun onCreateViewHolder(
@@ -39,6 +40,7 @@ class DailyForecastListAdapter(
         holder.tvMaxTemp.text = dayForecastView.maxTemp
         holder.tvMinTemp.text = dayForecastView.minTemp
         holder.ivWeather.setImageResource(dayForecastView.iconId)
+        holder.itemView.setOnClickListener { listener.onDayForecastClick(dayForecastView) }
     }
 
     override fun getItemCount(): Int {

@@ -1,7 +1,6 @@
 package com.example.uxweatherkt.ui.currentWeatherView
 
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -20,7 +18,6 @@ import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherV
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenter
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenterImpl
 import com.example.uxweatherkt.presenter.row.CurrentWeatherView
-import com.example.uxweatherkt.presenter.util.LocationFinder
 import com.example.uxweatherkt.ui.WeatherView
 
 
@@ -46,7 +43,7 @@ class CurrentWeatherFragment : Fragment(),
 //        presenter initialization and attach with WeatherView (this fragment)
         initPresenter()
         liveData = currentWeatherPresenter!!.getLiveData()
-        liveData.observe(this, Observer { showWeather() })
+        liveData.observe(this, Observer { bindData() })
     }
 
     override fun onCreateView(
@@ -64,7 +61,7 @@ class CurrentWeatherFragment : Fragment(),
         currentWeatherPresenter!!.detachView()
     }
 
-    override fun showWeather() {
+    override fun bindData() {
         hideLoading()
         if (liveData.value == null) {
             dataIsNotAvailable()
@@ -73,7 +70,7 @@ class CurrentWeatherFragment : Fragment(),
         initData(liveData.value)
     }
 
-    override fun dataIsNotAvailable() {
+    fun dataIsNotAvailable() {
         val stringing = "DATA IS NOT AVAILABLE"
         tvDataIsNotAvailable =
             view!!.findViewById((R.id.fragment_current_weather__tvDataIsNotAvailable))
@@ -82,6 +79,7 @@ class CurrentWeatherFragment : Fragment(),
 
     override fun showLoading() {
         progressBar.visibility = View.VISIBLE
+
     }
 
     override fun hideLoading() {

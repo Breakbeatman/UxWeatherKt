@@ -35,3 +35,5 @@ const val PARSER_KEY_FEEL_LIKE: String = "feel_like"
 const val PARSER_KEY_PRESSURE: String = "pressure"
 const val PARSER_KEY_HUMIDITY: String = "humidity"
 const val PARSER_KEY_WIND_SPEED: String = "wind_speed"
+
+const val DAY_FORECAST_VIEW_KEY = "day_forecast_view"

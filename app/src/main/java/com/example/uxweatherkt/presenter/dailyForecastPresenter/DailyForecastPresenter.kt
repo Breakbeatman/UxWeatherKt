@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.presenter.dailyForecast
+package com.example.uxweatherkt.presenter.dailyForecastPresenter
 
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.WeatherPresenter

@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.presenter.dailyForecast
+package com.example.uxweatherkt.presenter.dailyForecastPresenter
 
 import com.example.uxweatherkt.presenter.row.DayForecastView
 import com.example.uxweatherkt.presenter.util.IconBinder

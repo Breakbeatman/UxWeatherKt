@@ -16,10 +16,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.App
 
 import com.example.uxweatherkt.R
-import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastPresenter
-import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastPresenterImpl
-import com.example.uxweatherkt.presenter.dailyForecast.DailyForecastViewModel
+import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastPresenter
+import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastPresenterImpl
+import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastViewModel
 import com.example.uxweatherkt.presenter.row.DayForecastView
+import com.example.uxweatherkt.ui.DetailDayActivity
 import com.example.uxweatherkt.ui.WeatherView
 
 class DailyForecastListFragment : Fragment(), WeatherView,
@@ -31,7 +32,6 @@ class DailyForecastListFragment : Fragment(), WeatherView,
 
     private var dailyForecastPresenter: DailyForecastPresenter? = null
 
-    private lateinit var listener: Listener
     private lateinit var dailyForecastView: ArrayList<DayForecastView>
     private lateinit var dailyForecastListAdapter: DailyForecastListAdapter
     private lateinit var liveData: MutableLiveData<List<DayForecastView>>
@@ -41,7 +41,7 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         super.onCreate(savedInstanceState)
         initPresenter()
         liveData = dailyForecastPresenter!!.getLiveData()
-        liveData.observe(this, Observer { showWeather() })
+        liveData.observe(this, Observer { bindData() })
     }
 
     override fun onCreateView(
@@ -58,7 +58,7 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         dailyForecastPresenter!!.detachView()
     }
 
-    override fun showWeather() {
+    override fun bindData() {
         hideLoading()
         if (liveData.value == null) {
             dataIsNotAvailable()
@@ -67,7 +67,7 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         initData(liveData.value as ArrayList)
     }
 
-    override fun dataIsNotAvailable() {
+    fun dataIsNotAvailable() {
         Toast.makeText(activity, "asdasd", Toast.LENGTH_SHORT).show()
     }
 
@@ -79,8 +79,8 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         progressBar.visibility = View.GONE
     }
 
-    override fun onDayForecastClick() {
-        TODO("Not yet implemented")
+    override fun onDayForecastClick(dayForecastView: DayForecastView) {
+        DetailDayActivity.StartObj.start(context ?: return, dayForecastView)
     }
 
     fun onLocationReady(location: Location) {
@@ -112,7 +112,6 @@ class DailyForecastListFragment : Fragment(), WeatherView,
         val dailyForecastView = ArrayList<DayForecastView>()
         dailyForecastListAdapter =
             DailyForecastListAdapter(
-                dailyForecastView,
                 this
             )
         val recyclerView: RecyclerView =
