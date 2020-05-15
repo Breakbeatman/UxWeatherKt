@@ -7,25 +7,22 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
-import com.example.uxweatherkt.presenter.row.DayForecastView
+import com.example.uxweatherkt.presenter.row.DayForecastRow
 
-class DailyForecastListAdapter(var listener: Listener) :
-    RecyclerView.Adapter<DailyForecastListAdapter.ViewHolder>() {
-
-    private var dailyForecastView: ArrayList<DayForecastView> = ArrayList()
+class DailyForecastAdapter(var listener: Listener) :
+    RecyclerView.Adapter<DailyForecastAdapter.ViewHolder>() {
 
     interface Listener {
-        fun onDayForecastClick(dayForecastView: DayForecastView)
+        fun onDayForecastClick(dayForecastRow: DayForecastRow)
     }
+
+    private var dailyForecastView = ArrayList<DayForecastRow>()
 
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
     }
 
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.row_day_forecast, parent, false)
         return ViewHolder(
@@ -47,9 +44,9 @@ class DailyForecastListAdapter(var listener: Listener) :
         return dailyForecastView.size
     }
 
-    fun setDailyForecast(dailyForecastView: ArrayList<DayForecastView>) {
+    fun setDailyForecast(dailyForecastRow: ArrayList<DayForecastRow>) {
         this.dailyForecastView.clear()
-        this.dailyForecastView.addAll(dailyForecastView)
+        this.dailyForecastView.addAll(dailyForecastRow)
         notifyDataSetChanged()
     }
 
@@ -65,7 +62,7 @@ class DailyForecastListAdapter(var listener: Listener) :
             tvDayOfWeek = itemView.findViewById(R.id.row_day_forecast__tvDayOfWeek)
             tvMaxTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMax)
             tvMinTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMin)
-            ivWeather = itemView.findViewById(R.id.row_day_forecast_ivWeather)
+            ivWeather = itemView.findViewById(R.id.row_day_forecast__ivWeather)
         }
     }
 }

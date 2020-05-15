@@ -2,10 +2,9 @@ package com.example.uxweatherkt
 
 const val MY_PERMISSIONS_FINE_LOCATION = 1
 
-const val CURRENT_WEATHER_FRAGMENT_TAG = "fragment_current_weather"
-const val DAILY_FORECAST_FRAGMENT_TAG = "fragment_daily_forecast"
+const val MAIN_FRAGMENT_TAG = "fragment_main"
 
-const val PROXY_PATH = "http://192.168.1.100:4567/forecast/"
+const val PROXY_SERVER_PATH = "http://192.168.1.100:4567/forecast/"
 
 const val REQUEST_PARAM_BY_LOCATION = "bylocation"
 const val REQUEST_PARAM_BY_CITY_NAME = "bycityname"
@@ -30,7 +29,6 @@ const val PARSER_KEY_MAX_TEMP: String = "max_temp"
 const val PARSER_KEY_MIN_TEMP: String = "min_temp"
 const val PARSER_KEY_FEEL_LIKE_MAX_TEMP: String = "feel_like_max_temp"
 const val PARSER_KEY_FEEL_LIKE_MIX_TEMP: String = "feel_like_app_max_temp"
-const val PARSER_KEY_EVE: String = "eve"
 const val PARSER_KEY_FEEL_LIKE: String = "feel_like"
 const val PARSER_KEY_PRESSURE: String = "pressure"
 const val PARSER_KEY_HUMIDITY: String = "humidity"

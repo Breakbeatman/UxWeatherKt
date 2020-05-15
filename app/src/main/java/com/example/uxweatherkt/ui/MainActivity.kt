@@ -13,14 +13,12 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.input.getInputField
 import com.afollestad.materialdialogs.input.input
 import com.example.uxweatherkt.*
 
 import com.example.uxweatherkt.presenter.util.LocationFinder
 import com.example.uxweatherkt.ui.userLocation.UserLocation
-import com.example.uxweatherkt.ui.currentWeatherView.CurrentWeatherFragment
-import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastListFragment
+
 
 class MainActivity : AppCompatActivity(), LocationFinder.Listener {
 
@@ -43,7 +41,7 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
             getUserPermission()
         }
         init()
-        initFragments(savedInstanceState)
+        initMainFragment(savedInstanceState)
     }
 
     override fun onStart() {
@@ -64,8 +62,7 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) && (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     findUserLocation()
                 } else {
-//                    TODO: dialog with Cityname text field
-                    cityNameDialogStart()
+                    startCityNameDialog()
                     Toast.makeText(this, "Permission was not granted", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -76,16 +73,9 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
     }
 
     override fun onLocationReady(location: Location) {
-        val mainFragment = supportFragmentManager.findFragmentByTag("fr1") as MainFragment
+        val mainFragment =
+            supportFragmentManager.findFragmentByTag(MAIN_FRAGMENT_TAG) as MainFragment
         mainFragment.passLocation(location)
-//        val currentWeatherFragment: CurrentWeatherFragment =
-//            supportFragmentManager.findFragmentByTag(CURRENT_WEATHER_FRAGMENT_TAG) as CurrentWeatherFragment
-//        currentWeatherFragment.onLocationReady(
-//            location
-//        )
-//        (supportFragmentManager.findFragmentByTag(DAILY_FORECAST_FRAGMENT_TAG) as DailyForecastListFragment).onLocationReady(
-//            location
-//        )
     }
 
     override fun doNotHavePermission() {
@@ -99,22 +89,11 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
         locationFinder = (application as App).getDependencyRoot().locationFinder
     }
 
-    private fun initFragments(savedInstanceState: Bundle?) {
+    private fun initMainFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.activity_main__fragment_container, MainFragment(), "fr1").commit()
-//            supportFragmentManager.beginTransaction()
-//                .add(
-//                    R.id.activity_main__fragment_container,
-//                    CurrentWeatherFragment(), CURRENT_WEATHER_FRAGMENT_TAG
-//                )
-//                .commit()
-//            supportFragmentManager.beginTransaction()
-//                .add(
-//                    R.id.activity_main__fragment_container2,
-//                    DailyForecastListFragment(), DAILY_FORECAST_FRAGMENT_TAG
-//                )
-//                .commit()
+                .add(R.id.activity_main__fragment_container, MainFragment(), MAIN_FRAGMENT_TAG)
+                .commit()
         }
     }
 
@@ -147,7 +126,7 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
         }
     }
 
-    private fun cityNameDialogStart() {
+    private fun startCityNameDialog() {
         MaterialDialog(this).show {
             input(hintRes = R.string.enter_your_location_name) { dialog, text ->
 
@@ -164,13 +143,5 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
     private fun cityNameReady(cityName: String) {
         val mainFragment = supportFragmentManager.findFragmentByTag("fr1") as MainFragment
         mainFragment.passCityName(cityName)
-//        val currentWeatherFragment: CurrentWeatherFragment =
-//            supportFragmentManager.findFragmentByTag(CURRENT_WEATHER_FRAGMENT_TAG) as CurrentWeatherFragment
-//        currentWeatherFragment.onCityNameReady(
-//            cityName
-//        )
-//        (supportFragmentManager.findFragmentByTag(DAILY_FORECAST_FRAGMENT_TAG) as DailyForecastListFragment).onCityNameReady(
-//            cityName
-//        )
     }
 }

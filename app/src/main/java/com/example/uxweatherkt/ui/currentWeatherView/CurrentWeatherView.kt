@@ -10,8 +10,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.example.uxweatherkt.R
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenter
-import com.example.uxweatherkt.presenter.row.CurrentWeatherView
-import com.example.uxweatherkt.ui.BaseView
+import com.example.uxweatherkt.presenter.row.CurrentWeatherRow
+import com.example.uxweatherkt.ui.baseView.BaseView
 import com.example.uxweatherkt.ui.WeatherView
 
 class CurrentWeatherView : BaseView, WeatherView {
@@ -30,7 +30,7 @@ class CurrentWeatherView : BaseView, WeatherView {
     private var lifecycleOwner: LifecycleOwner
     private var currentWeatherPresenter: CurrentWeatherPresenter?
 
-    private lateinit var liveData: MutableLiveData<CurrentWeatherView>
+    private lateinit var liveData: MutableLiveData<CurrentWeatherRow>
 
     private lateinit var tvDataIsNotAvailable: TextView
     private lateinit var tvTemp: TextView
@@ -81,23 +81,22 @@ class CurrentWeatherView : BaseView, WeatherView {
         tvWindSpeed = view.findViewById(R.id.fragment_main__tvWindSpeed)
         tvDescription = view.findViewById(R.id.fragment_main__tvDescription)
         ivDescription = view.findViewById(R.id.fragment_main__ivDescription)
+        tvDataIsNotAvailable =
+            baseRootView.findViewById((R.id.fragment_main__tvDataIsNotAvailable))
         progress = view.findViewById(R.id.fragment_main__pbLoading)
     }
 
-    private fun initData(currentWeatherView: CurrentWeatherView?) {
-        tvTemp.text = currentWeatherView?.temp
-        tvFeelLike.text = currentWeatherView?.feelLike
-        tvPressure.text = currentWeatherView?.pressure
-        tvHumidity.text = currentWeatherView?.humidity
-        tvWindSpeed.text = currentWeatherView?.windSpeed
-        tvDescription.text = currentWeatherView?.weatherDescription
-        ivDescription.setImageResource(currentWeatherView!!.iconId)
+    private fun initData(currentWeatherRow: CurrentWeatherRow?) {
+        tvTemp.text = currentWeatherRow?.temp
+        tvFeelLike.text = currentWeatherRow?.feelLike
+        tvPressure.text = currentWeatherRow?.pressure
+        tvHumidity.text = currentWeatherRow?.humidity
+        tvWindSpeed.text = currentWeatherRow?.windSpeed
+        tvDescription.text = currentWeatherRow?.weatherDescription
+        ivDescription.setImageResource(currentWeatherRow!!.iconId)
     }
 
     private fun dataIsNotAvailable() {
-        val stringing = "DATA IS NOT AVAILABLE"
-        tvDataIsNotAvailable =
-            baseRootView.findViewById((R.id.fragment_main__tvDataIsNotAvailable))
-        tvDataIsNotAvailable.text = stringing
+        tvDataIsNotAvailable.visibility = View.VISIBLE
     }
 }

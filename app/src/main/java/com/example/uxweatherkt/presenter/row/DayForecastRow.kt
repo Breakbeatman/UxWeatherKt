@@ -4,7 +4,7 @@ import android.os.Parcel
 
 import android.os.Parcelable
 
-class DayForecastView : Parcelable {
+class DayForecastRow : Parcelable {
 
     var date: String?
     var maxTemp: String?
@@ -76,12 +76,12 @@ class DayForecastView : Parcelable {
         return "DayForecastView(date=$date, maxTemp=$maxTemp, minTemp=$minTemp, maxTempFeelLike=$maxTempFeelLike, minTempFeelLike=$minTempFeelLike, pressure=$pressure, humidity=$humidity, windSpeed=$windSpeed, iconId=$iconId)"
     }
 
-    companion object CREATOR : Parcelable.Creator<DayForecastView> {
-        override fun createFromParcel(parcel: Parcel): DayForecastView {
-            return DayForecastView(parcel)
+    companion object CREATOR : Parcelable.Creator<DayForecastRow> {
+        override fun createFromParcel(parcel: Parcel): DayForecastRow {
+            return DayForecastRow(parcel)
         }
 
-        override fun newArray(size: Int): Array<DayForecastView?> {
+        override fun newArray(size: Int): Array<DayForecastRow?> {
             return arrayOfNulls(size)
         }
     }

@@ -2,7 +2,7 @@ package com.example.uxweatherkt.presenter.currentWeatherPresenter
 
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
-import com.example.uxweatherkt.presenter.row.CurrentWeatherView
+import com.example.uxweatherkt.presenter.row.CurrentWeatherRow
 import com.example.uxweatherkt.ui.WeatherView
 import com.example.uxweatherkt.weather.WeatherModel
 
@@ -12,16 +12,16 @@ class CurrentWeatherPresenterImpl(
 ) : CurrentWeatherPresenter {
 
     private var weatherView: WeatherView? = null
-    private var currentWeatherView: CurrentWeatherView? = null
+    private var currentWeatherRow: CurrentWeatherRow? = null
 
-    private var currentWeatherData = MutableLiveData<CurrentWeatherView>()
+    private var currentWeatherData = MutableLiveData<CurrentWeatherRow>()
 
     private lateinit var latitude: String
     private lateinit var longitude: String
 
     override fun getData(location: Location) {
         initCoordinates(location)
-        if (currentWeatherView == null) {
+        if (currentWeatherRow == null) {
             object : Thread() {
                 override fun run() {
                     val currentWeather = weatherModel.loadCurrentWeatherBy(latitude, longitude)
@@ -29,18 +29,18 @@ class CurrentWeatherPresenterImpl(
                         currentWeatherData.postValue(null)
                         return
                     }
-                    currentWeatherView =
+                    currentWeatherRow =
                         currentWeatherDataBinder.bindCurrentWeatherView(currentWeather)
-                    currentWeatherData.postValue(currentWeatherView)
+                    currentWeatherData.postValue(currentWeatherRow)
                 }
             }.start()
         } else {
-            currentWeatherData.postValue(currentWeatherView)
+            currentWeatherData.postValue(currentWeatherRow)
         }
     }
 
     override fun getData(cityName: String) {
-        if (currentWeatherView == null) {
+        if (currentWeatherRow == null) {
             object : Thread() {
                 override fun run() {
                     val currentWeather = weatherModel.loadCurrentWeatherBy(cityName)
@@ -48,17 +48,17 @@ class CurrentWeatherPresenterImpl(
                         currentWeatherData.postValue(null)
                         return
                     }
-                    currentWeatherView =
+                    currentWeatherRow =
                         currentWeatherDataBinder.bindCurrentWeatherView(currentWeather)
-                    currentWeatherData.postValue(currentWeatherView)
+                    currentWeatherData.postValue(currentWeatherRow)
                 }
             }.start()
         } else {
-            currentWeatherData.postValue(currentWeatherView)
+            currentWeatherData.postValue(currentWeatherRow)
         }
     }
 
-    override fun getLiveData(): MutableLiveData<CurrentWeatherView> {
+    override fun getLiveData(): MutableLiveData<CurrentWeatherRow> {
         return currentWeatherData
     }
 

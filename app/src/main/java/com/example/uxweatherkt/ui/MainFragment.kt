@@ -21,13 +21,15 @@ import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastVie
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastPresenter
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastPresenterImpl
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastViewModel
-import com.example.uxweatherkt.presenter.row.DayForecastView
+import com.example.uxweatherkt.presenter.row.DayForecastRow
+import com.example.uxweatherkt.presenter.row.HourForecastRow
 import com.example.uxweatherkt.ui.currentWeatherView.CurrentWeatherView
-import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastListAdapter
+import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastAdapter
 import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastView
+import com.example.uxweatherkt.ui.hourlyForecastView.HourlyForecastAdapter
 import com.example.uxweatherkt.ui.hourlyForecastView.HourlyForecastView
 
-class MainFragment : Fragment(), DailyForecastListAdapter.Listener {
+class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAdapter.Listener {
 
     private lateinit var currentWeatherView: CurrentWeatherView
     private lateinit var hourlyForecastView: HourlyForecastView
@@ -65,11 +67,13 @@ class MainFragment : Fragment(), DailyForecastListAdapter.Listener {
 
     fun passLocation(location: Location) {
         currentWeatherView.onLocationReady(location)
+        hourlyForecastView.onLocationReady(location)
         dailyForecastView.onLocationReady(location)
     }
 
     fun passCityName(cityName: String) {
         currentWeatherView.onCityNameReady(cityName)
+        hourlyForecastView.onCityNameReady(cityName)
         dailyForecastView.onCityNameReady(cityName)
     }
 
@@ -119,19 +123,25 @@ class MainFragment : Fragment(), DailyForecastListAdapter.Listener {
             view.findViewById(R.id.fragment_main__view_current_weather), this,
             currentWeatherPresenter
         )
+        val hLinearLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        val hourlyForecastAdapter = HourlyForecastAdapter(this)
         hourlyForecastView = HourlyForecastView(
-            view.findViewById(R.id.fragment_main__view_hourly_forecast),
-            hourlyForecastPresenter
+            view.findViewById(R.id.fragment_main__view_hourly_forecast), this,
+            hourlyForecastPresenter, hourlyForecastAdapter, hLinearLayoutManager
         )
-        val dailyForecastListAdapter = DailyForecastListAdapter(this)
-        val linearLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        val dLinearLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
+        val dailyForecastListAdapter = DailyForecastAdapter(this)
         dailyForecastView = DailyForecastView(
             view.findViewById(R.id.fragment_main__view_daily_forecast), this,
-            dailyForecastPresenter, dailyForecastListAdapter, linearLayoutManager
+            dailyForecastPresenter, dailyForecastListAdapter, dLinearLayoutManager
         )
     }
 
-    override fun onDayForecastClick(dayForecastView: DayForecastView) {
-        DetailDayActivity.StartObj.start(context ?: return, dayForecastView)
+    override fun onDayForecastClick(dayForecastRow: DayForecastRow) {
+        DetailDayActivity.StartObj.start(context ?: return, dayForecastRow)
+    }
+
+    override fun onHourForecastClick(hourForecastRow: HourForecastRow) {
+        TODO("Not yet implemented")
     }
 }

@@ -1,14 +1,14 @@
 package com.example.uxweatherkt.presenter.hourlyForecastPresenter
 
-import com.example.uxweatherkt.presenter.row.HourForecastView
+import com.example.uxweatherkt.presenter.row.HourForecastRow
 import com.example.uxweatherkt.presenter.util.IconBinder
 import com.example.uxweatherkt.weather.model.HourForecast
 
 class HourlyForecastDataBinder(private val iconBinder: IconBinder) {
 
-    fun bindHourlyForecastView(hourlyForecast: ArrayList<HourForecast>): ArrayList<HourForecastView> {
+    fun bindHourlyForecastView(hourlyForecast: ArrayList<HourForecast>): ArrayList<HourForecastRow> {
         val degree = "\u00B0C"
-        val hourlyForecastView = ArrayList<HourForecastView>()
+        val hourlyForecastView = ArrayList<HourForecastRow>()
         for (i in hourlyForecast.indices) {
             val date = hourlyForecast[i].date.toString()
             val temp = hourlyForecast[i].temp.toString() + degree
@@ -19,7 +19,7 @@ class HourlyForecastDataBinder(private val iconBinder: IconBinder) {
             val iconId: Int =
                 iconBinder.bindIconId(hourlyForecast[i].weather.code, hourlyForecast[i].pod)
             hourlyForecastView.add(
-                HourForecastView(
+                HourForecastRow(
                     date,
                     temp,
                     feelLike,
@@ -32,5 +32,4 @@ class HourlyForecastDataBinder(private val iconBinder: IconBinder) {
         }
         return hourlyForecastView
     }
-
 }

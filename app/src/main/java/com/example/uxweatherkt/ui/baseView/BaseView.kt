@@ -1,7 +1,8 @@
-package com.example.uxweatherkt.ui
+package com.example.uxweatherkt.ui.baseView
 
 import android.content.Context
 import android.view.View
+import com.example.uxweatherkt.ui.baseView.MyView
 
 abstract class BaseView: MyView {
 
@@ -14,12 +15,4 @@ abstract class BaseView: MyView {
     protected fun getContext(): Context {
         return getRootView()!!.context
     }
-
-    protected fun findViewById(id: Int): View? {
-        return getRootView()!!.findViewById(id)
-    }
-
-//    protected open fun <T : View?> findViewById(id: Int): T {
-//        return getRootView()!!.findViewById(id)
-//    }
 }

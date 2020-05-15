@@ -4,12 +4,12 @@
     android:layout_height="wrap_content">
 
     <ProgressBar
-        android:id="@+id/view_daily_forecast__pbLoading"
+        android:id="@+id/view_recycler__pbLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/view_daily_forecast__recyclerView"
+        android:id="@+id/view_recycler__recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

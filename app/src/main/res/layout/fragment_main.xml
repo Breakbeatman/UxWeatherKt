@@ -24,7 +24,8 @@
             android:id="@+id/fragment_main__tvDataIsNotAvailable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/fragment_main__tvTemp"
@@ -65,10 +66,12 @@
 
     <include
         android:id="@+id/fragment_main__view_hourly_forecast"
-        layout="@layout/view_recycler"/>
+        layout="@layout/view_recycler"
+        android:visibility="invisible" />
 
     <include
         android:id="@+id/fragment_main__view_daily_forecast"
-        layout="@layout/view_recycler"/>
+        layout="@layout/view_recycler"
+        android:visibility="invisible" />
 
 </LinearLayout>

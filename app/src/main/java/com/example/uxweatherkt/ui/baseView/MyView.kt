@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.ui
+package com.example.uxweatherkt.ui.baseView
 
 import android.view.View
 

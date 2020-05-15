@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
 import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastPresenter
-import com.example.uxweatherkt.presenter.row.DayForecastView
-import com.example.uxweatherkt.ui.BaseView
+import com.example.uxweatherkt.presenter.row.DayForecastRow
+import com.example.uxweatherkt.ui.baseView.BaseView
 import com.example.uxweatherkt.ui.WeatherView
 
 class DailyForecastView : BaseView, WeatherView {
@@ -20,23 +20,23 @@ class DailyForecastView : BaseView, WeatherView {
         baseRootView: View,
         lifecycleOwner: LifecycleOwner,
         dailyForecastPresenter: DailyForecastPresenter?,
-        dailyForecastListAdapter: DailyForecastListAdapter,
+        dailyForecastAdapter: DailyForecastAdapter,
         linearLayoutManager: LinearLayoutManager
     ) {
         this.baseRootView = baseRootView
         this.lifecycleOwner = lifecycleOwner
         this.dailyForecastPresenter = dailyForecastPresenter
-        this.dailyForecastListAdapter = dailyForecastListAdapter
+        this.dailyForecastAdapter = dailyForecastAdapter
         this.linearLayoutManager = linearLayoutManager
         init()
     }
 
     private var lifecycleOwner: LifecycleOwner
     private var dailyForecastPresenter: DailyForecastPresenter? = null
-    private var dailyForecastListAdapter: DailyForecastListAdapter
+    private var dailyForecastAdapter: DailyForecastAdapter
     private var linearLayoutManager: LinearLayoutManager
 
-    private lateinit var liveData: MutableLiveData<List<DayForecastView>>
+    private lateinit var liveData: MutableLiveData<List<DayForecastRow>>
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var progress: ProgressBar
@@ -59,24 +59,24 @@ class DailyForecastView : BaseView, WeatherView {
 
     fun onLocationReady(location: Location) {
         showLoading()
-        dailyForecastPresenter!!.getData(location)
+        dailyForecastPresenter?.getData(location)
     }
 
     fun onCityNameReady(cityName: String) {
         showLoading()
-        dailyForecastPresenter!!.getData(cityName)
+        dailyForecastPresenter?.getData(cityName)
     }
 
     private fun init() {
         liveData = dailyForecastPresenter!!.getLiveData()
         liveData.observe(lifecycleOwner, Observer { bindData() })
-        progress = findViewById(R.id.view_daily_forecast__pbLoading) as ProgressBar
-        recyclerView = findViewById(R.id.view_daily_forecast__recyclerView) as RecyclerView
-        recyclerView.adapter = dailyForecastListAdapter
+        progress = baseRootView.findViewById(R.id.view_recycler__pbLoading)
+        recyclerView = baseRootView.findViewById(R.id.view_recycler__recyclerView)
+        recyclerView.adapter = dailyForecastAdapter
         recyclerView.layoutManager = linearLayoutManager
     }
 
-    private fun initData(dailyForecastView: ArrayList<DayForecastView>) {
-        dailyForecastListAdapter.setDailyForecast(dailyForecastView)
+    private fun initData(dailyForecastRow: ArrayList<DayForecastRow>) {
+        dailyForecastAdapter.setDailyForecast(dailyForecastRow)
     }
 }

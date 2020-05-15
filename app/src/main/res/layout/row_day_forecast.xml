@@ -41,7 +41,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/row_day_forecast_ivWeather"
+        android:id="@+id/row_day_forecast__ivWeather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMin"
