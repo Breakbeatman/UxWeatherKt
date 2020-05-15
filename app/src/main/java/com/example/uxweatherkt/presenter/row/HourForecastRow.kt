@@ -1,6 +1,6 @@
 package com.example.uxweatherkt.presenter.row
 
-class HourForecastView(
+class HourForecastRow(
     val date: String,
     val temp: String,
     val feelLike: String,

@@ -41,13 +41,19 @@ class WeatherModelImpl(
     ): ArrayList<HourForecast>? {
         val response =
             remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY, latitude, longitude)
+                ?: return null
         hourlyForecast =
-            weatherJSONParser.parseHourlyWeather(response!!)
+            weatherJSONParser.parseHourlyWeather(response)
         return hourlyForecast
     }
 
     override fun loadHourlyForecastBy(cityName: String): ArrayList<HourForecast>? {
-        TODO("Not yet implemented")
+        val response =
+            remoteRequestMaker.makeRequest(REQUEST_TYPE_VALUE_HOURLY, cityName)
+                ?: return null
+        hourlyForecast =
+            weatherJSONParser.parseHourlyWeather(response)
+        return hourlyForecast
     }
 
     override fun loadDailyForecastBy(latitude: String, longitude: String): ArrayList<DayForecast>? {
@@ -67,24 +73,4 @@ class WeatherModelImpl(
             weatherJSONParser.parseDailyWeather(response)
         return dailyForecast
     }
-
-//    fun onRequestReady(requestTypeValue: String, response: JSONObject) {
-//        when (requestTypeValue) {
-//            REQUEST_TYPE_VALUE_CURRENT -> {
-//                currentWeather =
-//                    weatherJSONParser.parseCurrentWeather(response)
-//                listener.currentWeatherReady(currentWeather)
-//            }
-//            REQUEST_TYPE_VALUE_HOURLY -> {
-//                hourlyForecast =
-//                    weatherJSONParser.parseHourlyWeather(response)
-//                listener.hourlyForecastReady(hourlyForecast)
-//            }
-//            REQUEST_TYPE_VALUE_DAILY -> {
-//                dailyForecast =
-//                    weatherJSONParser.parseDailyWeather(response)
-//                listener.dailyForecastReady(dailyForecast)
-//            }
-//        }
-//    }
 }

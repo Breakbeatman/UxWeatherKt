@@ -7,7 +7,7 @@ import com.example.uxweatherkt.weather.model.Weather
 
 // Заглушка
 class WeatherModelListImpl : WeatherModel {
-
+//    TODO: random weather generator
     override fun loadCurrentWeatherBy(latitude: String, longitude: String): CurrentWeather {
         return currentWeatherList()
     }

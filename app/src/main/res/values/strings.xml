@@ -4,4 +4,7 @@
     <string name="submit">Submit</string>
     <string name="deny">Deny</string>
     <string name="enter_your_location_name">Enter your location name</string>
+    <string name="data_is_not_available">Data is not available</string>
+    <string name="try_again_later">Try again later</string>
+
 </resources>

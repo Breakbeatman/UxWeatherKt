@@ -38,8 +38,9 @@ class LocationFinder(
         ) {
             listener.doNotHavePermission()
         } else {
-            // Permission has already been granted
+//            Permission has already been granted
             if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+//                RequestLocationUpdates in Network
                 Log.d("NETWORK", "in NETWORK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 locationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
@@ -47,6 +48,7 @@ class LocationFinder(
                     100f,
                     locationListener
                 )
+//                RequestLocationUpdates in Network
             } else if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                 Log.d("GPS", "in GPS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 locationManager.requestLocationUpdates(
@@ -88,7 +90,7 @@ class LocationFinder(
             location.latitude.toString() + "_______*_______" + location.longitude.toString()
         )
         listener!!.onLocationReady(location)
-//        удаляем ссылку на MainActivity
+//        delete MainActivity reference
         listener = null
         locationManager.removeUpdates(locationListener)
         userLocation.location = location

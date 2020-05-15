@@ -1,6 +1,6 @@
 package com.example.uxweatherkt.presenter.row
 
-class CurrentWeatherView(
+class CurrentWeatherRow(
     val temp: String,
     val feelLike: String,
     val pressure: String,

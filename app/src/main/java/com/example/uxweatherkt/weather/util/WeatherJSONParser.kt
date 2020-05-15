@@ -30,7 +30,7 @@ class WeatherJSONParser {
                 parseWeather(hourlyForecastJSON.getJSONObject(PARSER_KEY_WEATHER))
             val pod = hourlyForecastJSON.getString(PARSER_KEY_POD)
             val date = hourlyForecastJSON.getLong(PARSER_KEY_DATE)
-            val temp = hourlyForecastJSON.getDouble(PARSER_KEY_EVE)
+            val temp = hourlyForecastJSON.getDouble(PARSER_KEY_TEMP)
             val feelLike = hourlyForecastJSON.getDouble(PARSER_KEY_FEEL_LIKE)
             val pressure = hourlyForecastJSON.getDouble(PARSER_KEY_PRESSURE)
             val humidity = hourlyForecastJSON.getDouble(PARSER_KEY_HUMIDITY)
