@@ -3,12 +3,14 @@ package com.example.uxweatherkt.ui.hourlyForecastView
 import android.location.Location
 import android.view.View
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
+import com.example.uxweatherkt.REQUEST_TYPE_VALUE_HOURLY_UPPER
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastPresenter
 import com.example.uxweatherkt.presenter.row.HourForecastRow
 import com.example.uxweatherkt.ui.baseView.BaseView
@@ -38,17 +40,21 @@ class HourlyForecastView : BaseView, WeatherView {
 
     private lateinit var liveData: MutableLiveData<List<HourForecastRow>>
 
+    private lateinit var tvTitle: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progress: ProgressBar
 
     override fun bindData() {
         hideLoading()
+        if (liveData.value == null) {
+            return
+        }
         initData(liveData.value as ArrayList)
     }
 
     override fun showLoading() {
-        baseRootView.visibility = View.GONE
         progress.visibility = View.VISIBLE
+//        baseRootView.visibility = View.INVISIBLE
     }
 
     override fun hideLoading() {
@@ -70,6 +76,8 @@ class HourlyForecastView : BaseView, WeatherView {
         liveData = hourlyForecastPresenter!!.getLiveData()
         liveData.observe(lifecycleOwner, Observer {bindData()})
         progress = baseRootView.findViewById(R.id.view_recycler__pbLoading)
+        tvTitle = baseRootView.findViewById(R.id.view_recycler__tvTitle)
+        tvTitle.text = baseRootView.resources.getString(R.string.hourly)
         recyclerView = baseRootView.findViewById(R.id.view_recycler__recyclerView)
         recyclerView.adapter = hourlyForecastAdapter
         recyclerView.layoutManager = linearLayoutManager

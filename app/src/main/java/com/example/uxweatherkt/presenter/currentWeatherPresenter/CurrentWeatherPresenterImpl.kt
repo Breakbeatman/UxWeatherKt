@@ -19,6 +19,7 @@ class CurrentWeatherPresenterImpl(
     private lateinit var latitude: String
     private lateinit var longitude: String
 
+//    TODO: coroutines
     override fun getData(location: Location) {
         initCoordinates(location)
         if (currentWeatherRow == null) {

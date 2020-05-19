@@ -1,68 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_main__view_current_weather"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.MainFragment">
 
-    <LinearLayout
-        android:id="@+id/fragment_main__view_current_weather"
+
+    <ProgressBar
+        android:id="@+id/fragment_main__pbLoading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvDataIsNotAvailable"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:text="@string/data_is_not_available"
+        android:textSize="40sp"
+        android:visibility="gone" />
 
-        <ProgressBar
-            android:id="@+id/fragment_main__pbLoading"
+    <TextView
+        android:id="@+id/fragment_main__tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvTemp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="50sp" />
+
+    <ImageView
+        android:id="@+id/fragment_main__ivDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/detail"
+        android:visibility="invisible" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:padding="0dp">
+
+        <include
+            android:id="@+id/fragment_main__cvFeelsLike"
+            layout="@layout/card_detail_current_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="invisible" />
+            app:layout_constraintBottom_toTopOf="@+id/fragment_main__cvVisibility"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_main__cvHumidity"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-        <TextView
-            android:id="@+id/fragment_main__tvDataIsNotAvailable"
+        <include
+            android:id="@+id/fragment_main__cvHumidity"
+            layout="@layout/card_detail_current_weather"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:visibility="gone"/>
+            app:layout_constraintBottom_toTopOf="@+id/fragment_main__cvDewPoint"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_main__cvUvIndex"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__cvFeelsLike"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-        <TextView
-            android:id="@+id/fragment_main__tvTemp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/fragment_main__tvFeelLike"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/fragment_main__tvPressure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/fragment_main__tvHumidity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/fragment_main__tvWindSpeed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/fragment_main__tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <ImageView
-            android:id="@+id/fragment_main__ivDescription"
+        <include
+            android:id="@+id/fragment_main__cvUvIndex"
+            layout="@layout/card_detail_current_weather"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/fragment_main__cvPressure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__cvHumidity"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
 
-    </LinearLayout>
+        <include
+            android:id="@+id/fragment_main__cvVisibility"
+            layout="@layout/card_detail_current_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/fragment_main__cvDewPoint"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fragment_main__cvFeelsLike" />
+
+        <include
+            android:id="@+id/fragment_main__cvDewPoint"
+            layout="@layout/card_detail_current_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/fragment_main__cvPressure"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__cvVisibility"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_main__cvHumidity" />
+
+        <include
+            android:id="@+id/fragment_main__cvPressure"
+            layout="@layout/card_detail_current_weather"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__cvDewPoint"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_main__cvUvIndex" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <include
         android:id="@+id/fragment_main__view_hourly_forecast"
@@ -73,5 +135,29 @@
         android:id="@+id/fragment_main__view_daily_forecast"
         layout="@layout/view_recycler"
         android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvWind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:text="@string/detail" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvWindSpeed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/fragment_main__tvWindDirection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:id="@+id/fragment_main__ivWindDirection"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_wind_direction" />
 
 </LinearLayout>

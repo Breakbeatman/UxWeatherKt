@@ -16,15 +16,15 @@ import com.afollestad.materialdialogs.MaterialDialog
 import com.afollestad.materialdialogs.input.input
 import com.example.uxweatherkt.*
 
-import com.example.uxweatherkt.presenter.util.LocationFinder
+import com.example.uxweatherkt.presenter.util.UserLocationFinder
 import com.example.uxweatherkt.ui.userLocation.UserLocation
 
 
-class MainActivity : AppCompatActivity(), LocationFinder.Listener {
+class MainActivity : AppCompatActivity(), UserLocationFinder.Listener {
 
     private lateinit var locationManager: LocationManager
     private lateinit var userLocation: UserLocation
-    private lateinit var locationFinder: LocationFinder
+    private lateinit var userLocationFinder: UserLocationFinder
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
     private fun init() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         userLocation = (application as App).getDependencyRoot().userLocation
-        locationFinder = (application as App).getDependencyRoot().locationFinder
+        userLocationFinder = (application as App).getDependencyRoot().locationFinder
     }
 
     private fun initMainFragment(savedInstanceState: Bundle?) {
@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity(), LocationFinder.Listener {
 
     private fun findUserLocation() {
         if (userLocation.location == null) {
-            locationFinder.findLocation(locationManager, this)
+            userLocationFinder.findLocation(locationManager, this)
         } else {
             onLocationReady(userLocation.location as Location)
         }

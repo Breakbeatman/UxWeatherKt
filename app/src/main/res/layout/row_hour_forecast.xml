@@ -1,42 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:padding="8dp">
 
     <TextView
-        android:id="@+id/row_hour_forecast__tvDate"
+        android:id="@+id/row_hour_forecast__tvTemp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
+        android:text="@string/hello"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@+id/row_hour_forecast__tvFeelLike"
+        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/row_hour_forecast__temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/row_hour_forecast__tvDate" />
 
     <TextView
         android:id="@+id/row_hour_forecast__tvFeelLike"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/row_hour_forecast__temp" />
+        android:text="@string/hello"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/row_hour_forecast__tvTemp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/row_hour_forecast__guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="27dp" />
+
 
     <ImageView
         android:id="@+id/row_hour_forecast__ivWeather"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:contentDescription="@string/weather_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/row_hour_forecast__guideline" />
+
+    <TextView
+        android:id="@+id/row_hour_forecast__tvDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="weather state"
+        android:text="@string/hello"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/row_hour_forecast__tvFeelLike" />
+        app:layout_constraintTop_toBottomOf="@id/row_hour_forecast__ivWeather" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

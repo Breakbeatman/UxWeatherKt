@@ -5,9 +5,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
-import com.example.uxweatherkt.presenter.row.DayForecastRow
 import com.example.uxweatherkt.presenter.row.HourForecastRow
 
 
@@ -21,13 +21,14 @@ class HourlyForecastAdapter(var listener: Listener) : RecyclerView.Adapter<Hourl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.row_hour_forecast, parent, false)
+        val view = layoutInflater.inflate(R.layout.row_hour_forecast_2, parent, false) as CardView
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val hourForecastRow = hourlyForecast[position]
         holder.tvDate.text = hourForecastRow.date
+        holder.tvHumidity.text = hourForecastRow.humidity
         holder.tvTemp.text = hourForecastRow.temp
         holder.tvFeelLike.text = hourForecastRow.feelLike
         holder.ivWeather.setImageResource(hourForecastRow.iconId)
@@ -43,15 +44,17 @@ class HourlyForecastAdapter(var listener: Listener) : RecyclerView.Adapter<Hourl
         notifyDataSetChanged()
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: CardView) : RecyclerView.ViewHolder(itemView) {
         val tvDate: TextView
+        val tvHumidity: TextView
         val tvTemp: TextView
         val tvFeelLike: TextView
         val ivWeather: ImageView
 
         init {
             tvDate = itemView.findViewById(R.id.row_hour_forecast__tvDate)
-            tvTemp = itemView.findViewById(R.id.row_hour_forecast__temp)
+            tvHumidity = itemView.findViewById(R.id.row_hour_forecast__tvHumidity)
+            tvTemp = itemView.findViewById(R.id.row_hour_forecast__tvTemp)
             tvFeelLike = itemView.findViewById(R.id.row_hour_forecast__tvFeelLike)
             ivWeather = itemView.findViewById(R.id.row_hour_forecast__ivWeather)
         }

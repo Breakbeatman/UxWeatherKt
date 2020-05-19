@@ -2,7 +2,7 @@ package com.example.uxweatherkt.presenter.util
 
 import com.example.uxweatherkt.R
 
-class IconBinder {
+class IconWeatherBinder {
 
     fun bindIconId(code: Int, pod: String): Int {
         val iconName = bindWeatherCode(code, pod)

@@ -6,16 +6,23 @@ import org.json.JSONObject
 import java.io.IOException
 import java.net.URL
 
-class RemoteRequestMaker {
+class HttpRequestExecutor {
 
     fun makeRequest(requestTypeValue: String, latitude: String, longitude: String): JSONObject? {
+        val response: JSONObject?
         val builder = HttpUrl.parse(PROXY_SERVER_PATH + REQUEST_PARAM_BY_LOCATION)!!.newBuilder()
 
         builder.addQueryParameter(LATITUDE_KEY, latitude)
             .addQueryParameter(LONGITUDE_KEY, longitude)
             .addQueryParameter(REQUEST_TYPE_KEY, requestTypeValue)
-
-        return callExecute(builder)
+//        TODO: catch
+        try {
+            response = callExecute(builder)
+        } catch (e: IOException) {
+            e.printStackTrace()
+            return null
+        }
+        return response
     }
 
     fun makeRequest(requestTypeValue: String, cityName: String): JSONObject? {
@@ -33,16 +40,11 @@ class RemoteRequestMaker {
         val request = Request.Builder()
             .url(url)
             .build()
-        val response: Response?
-        try {
-            response = okHttpClient.newCall(request).execute()
-        } catch (e: IOException) {
-            e.printStackTrace()
-            return null
+        okHttpClient.newCall(request).execute().use { response ->
+            if (!response.isSuccessful) {
+                throw IOException("Unexpected code $response")
+            }
+            return JSONObject(response.body()!!.string())
         }
-        if (response == null) {
-            return null
-        }
-        return JSONObject(response.body()!!.string())
     }
 }

@@ -1,10 +1,10 @@
 package com.example.uxweatherkt.presenter.dailyForecastPresenter
 
 import com.example.uxweatherkt.presenter.row.DayForecastRow
-import com.example.uxweatherkt.presenter.util.IconBinder
+import com.example.uxweatherkt.presenter.util.IconWeatherBinder
 import com.example.uxweatherkt.weather.model.DayForecast
 
-class DailyForecastDataBinder(private val iconBinder: IconBinder) {
+class DailyForecastDataBinder(private val iconWeatherBinder: IconWeatherBinder) {
 
     fun bindDailyForecastView(dailyForecast: ArrayList<DayForecast>): ArrayList<DayForecastRow> {
         val degree = "\u00B0C"
@@ -18,7 +18,7 @@ class DailyForecastDataBinder(private val iconBinder: IconBinder) {
             val pressure: String = dailyForecast[i].pressure.toString()
             val humidity: String = dailyForecast[i].humidity.toString()
             val windSpeed: String = dailyForecast[i].windSpeed.toString()
-            val iconId: Int = iconBinder.bindIconId(dailyForecast[i].weather.code, "d")
+            val iconId: Int = iconWeatherBinder.bindIconId(dailyForecast[i].weather.code, "d")
             dailyForecastView.add(
                 DayForecastRow(
                     date,

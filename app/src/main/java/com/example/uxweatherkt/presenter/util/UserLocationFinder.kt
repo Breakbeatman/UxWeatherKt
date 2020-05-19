@@ -12,7 +12,7 @@ import androidx.core.app.ActivityCompat
 import com.example.uxweatherkt.MY_PERMISSIONS_FINE_LOCATION
 import com.example.uxweatherkt.ui.userLocation.UserLocation
 
-class LocationFinder(
+class UserLocationFinder(
     private val context: Context,
     private val userLocation: UserLocation
 ) {
