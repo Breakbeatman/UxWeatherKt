@@ -1,51 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_margin="4dp"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="0dp">
 
-    <TextView
-        android:id="@+id/row_day_forecast__tvDate"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="4dp"
+        android:padding="4dp">
 
-    <TextView
-        android:id="@+id/row_day_forecast__tvDayOfWeek"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvDate"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/row_day_forecast__tvTempMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"
+            android:layout_marginBottom="5dp"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toTopOf="@+id/row_day_forecast__ivMaxToMin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
-        android:id="@+id/row_day_forecast__tvTempMax"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvDayOfWeek"
-        app:layout_constraintStart_toStartOf="parent" />
+        <ImageView
+            android:id="@+id/row_day_forecast__ivMaxToMin"
+            android:layout_width="4dp"
+            android:layout_height="50dp"
+            android:src="@drawable/max_min_temp_shape"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMax"
+            android:contentDescription="TODO" />
 
-    <TextView
-        android:id="@+id/row_day_forecast__tvTempMin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello"
-        android:textSize="40sp"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMax"
-        app:layout_constraintStart_toStartOf="parent" />
+        <TextView
+            android:id="@+id/row_day_forecast__tvTempMin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"
+            android:layout_marginTop="5dp"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__ivMaxToMin" />
 
-    <ImageView
-        android:id="@+id/row_day_forecast__ivWeather"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMin"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="weather state" />
+        <ImageView
+            android:id="@+id/row_day_forecast__ivWeather"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:contentDescription="@string/weather_state"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvTempMin" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/row_day_forecast__tvDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/row_day_forecast__ivWeather" />
+
+        <TextView
+            android:id="@+id/row_day_forecast__tvDayOfWeek"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/hello"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/row_day_forecast__tvDate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

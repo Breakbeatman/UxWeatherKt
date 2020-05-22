@@ -32,11 +32,12 @@ class DailyForecastAdapter(var listener: Listener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dayForecastView = dailyForecastView[position]
-        holder.tvDate.text = dayForecastView.date
-        holder.tvDayOfWeek.text = "today"
         holder.tvMaxTemp.text = dayForecastView.maxTemp
+        holder.ivMinToMax
         holder.tvMinTemp.text = dayForecastView.minTemp
         holder.ivWeather.setImageResource(dayForecastView.iconId)
+        holder.tvDate.text = dayForecastView.date
+        holder.tvDayOfWeek.text = dayForecastView.dayOfWeek
         holder.itemView.setOnClickListener { listener.onDayForecastClick(dayForecastView) }
     }
 
@@ -51,18 +52,20 @@ class DailyForecastAdapter(var listener: Listener) :
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvDate: TextView
-        val tvDayOfWeek: TextView
         val tvMaxTemp: TextView
+        val ivMinToMax: ImageView
         val tvMinTemp: TextView
         val ivWeather: ImageView
+        val tvDate: TextView
+        val tvDayOfWeek: TextView
 
         init {
-            tvDate = itemView.findViewById(R.id.row_day_forecast__tvDate)
-            tvDayOfWeek = itemView.findViewById(R.id.row_day_forecast__tvDayOfWeek)
             tvMaxTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMax)
+            ivMinToMax = itemView.findViewById(R.id.row_day_forecast__ivMaxToMin)
             tvMinTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMin)
             ivWeather = itemView.findViewById(R.id.row_day_forecast__ivWeather)
+            tvDate = itemView.findViewById(R.id.row_day_forecast__tvDate)
+            tvDayOfWeek = itemView.findViewById(R.id.row_day_forecast__tvDayOfWeek)
         }
     }
 }

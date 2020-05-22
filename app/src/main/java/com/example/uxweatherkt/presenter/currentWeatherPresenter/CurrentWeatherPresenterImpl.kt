@@ -3,6 +3,7 @@ package com.example.uxweatherkt.presenter.currentWeatherPresenter
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.row.CurrentWeatherRow
+import com.example.uxweatherkt.presenter.util.Coordinates
 import com.example.uxweatherkt.ui.WeatherView
 import com.example.uxweatherkt.weather.WeatherModel
 
@@ -16,15 +17,15 @@ class CurrentWeatherPresenterImpl(
 
     private var currentWeatherData = MutableLiveData<CurrentWeatherRow>()
 
-    private lateinit var latitude: String
-    private lateinit var longitude: String
+    private lateinit var coordinates: Coordinates
 
+//    TODO: coroutines
     override fun getData(location: Location) {
         initCoordinates(location)
         if (currentWeatherRow == null) {
             object : Thread() {
                 override fun run() {
-                    val currentWeather = weatherModel.loadCurrentWeatherBy(latitude, longitude)
+                    val currentWeather = weatherModel.loadCurrentWeatherBy(coordinates)
                     if (currentWeather == null) {
                         currentWeatherData.postValue(null)
                         return
@@ -71,7 +72,8 @@ class CurrentWeatherPresenterImpl(
     }
 
     private fun initCoordinates(location: Location) {
-        latitude = location.latitude.toString()
-        longitude = location.longitude.toString()
+        val latitude = location.latitude.toString()
+        val longitude = location.longitude.toString()
+        coordinates = Coordinates(latitude, longitude)
     }
 }

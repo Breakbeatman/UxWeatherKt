@@ -18,7 +18,11 @@ class WeatherJSONParser {
         val pressure = jsonWeather.getDouble(PARSER_KEY_PRESSURE)
         val humidity = jsonWeather.getDouble(PARSER_KEY_HUMIDITY)
         val windSpeed = jsonWeather.getDouble(PARSER_KEY_WIND_SPEED)
-        return CurrentWeather(weather, pod, temp, feelLike, pressure, humidity, windSpeed)
+        val windDir = jsonWeather.getString(PARSER_KEY_WIND_DIR)
+        val uvIndex = jsonWeather.getInt(PARSER_KEY_UV_INDEX)
+        val visibility = jsonWeather.getInt(PARSER_KEY_VISIBILITY)
+        val dewPoint = jsonWeather.getDouble(PARSER_KEY_DEW_POINT)
+        return CurrentWeather(weather, pod, temp, feelLike, pressure, humidity, windSpeed, windDir, uvIndex, visibility, dewPoint)
     }
 
     fun parseHourlyWeather(jsonWeather: JSONObject): ArrayList<HourForecast> {

@@ -1,27 +1,32 @@
 package com.example.uxweatherkt.presenter.dailyForecastPresenter
 
+import com.example.uxweatherkt.DEGREE_UNIT
 import com.example.uxweatherkt.presenter.row.DayForecastRow
-import com.example.uxweatherkt.presenter.util.IconBinder
+import com.example.uxweatherkt.presenter.util.IconWeatherBinder
 import com.example.uxweatherkt.weather.model.DayForecast
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
-class DailyForecastDataBinder(private val iconBinder: IconBinder) {
+class DailyForecastDataBinder(private val iconWeatherBinder: IconWeatherBinder) {
 
     fun bindDailyForecastView(dailyForecast: ArrayList<DayForecast>): ArrayList<DayForecastRow> {
-        val degree = "\u00B0C"
         val dailyForecastView = ArrayList<DayForecastRow>()
         for (i in dailyForecast.indices) {
-            val date = dailyForecast[i].date.toString()
-            val maxTemp = dailyForecast[i].maxTemp.toString() + degree
-            val minTemp = dailyForecast[i].minTemp.toString() + degree
-            val maxTempFeelLike = dailyForecast[i].maxTempFeelLike.toString() + degree
-            val minTempFeelLike = dailyForecast[i].minTempFeelLike.toString() + degree
+            val date = formatDate(dailyForecast[i].date)
+            val dayOfWeek = formatDayOfWeek(dailyForecast[i].date)
+            val maxTemp = dailyForecast[i].maxTemp.toString() + DEGREE_UNIT
+            val minTemp = dailyForecast[i].minTemp.toString() + DEGREE_UNIT
+            val maxTempFeelLike = dailyForecast[i].maxTempFeelLike.toString() + DEGREE_UNIT
+            val minTempFeelLike = dailyForecast[i].minTempFeelLike.toString() + DEGREE_UNIT
             val pressure: String = dailyForecast[i].pressure.toString()
             val humidity: String = dailyForecast[i].humidity.toString()
             val windSpeed: String = dailyForecast[i].windSpeed.toString()
-            val iconId: Int = iconBinder.bindIconId(dailyForecast[i].weather.code, "d")
+            val iconId: Int = iconWeatherBinder.bindIconId(dailyForecast[i].weather.code, "d")
             dailyForecastView.add(
                 DayForecastRow(
                     date,
+                    dayOfWeek,
                     maxTemp,
                     minTemp,
                     maxTempFeelLike,
@@ -34,5 +39,15 @@ class DailyForecastDataBinder(private val iconBinder: IconBinder) {
             )
         }
         return dailyForecastView
+    }
+
+    private fun formatDate(date: Long): String {
+        val df = SimpleDateFormat("dd MMM", Locale.getDefault())
+        return df.format(date*1000)
+    }
+
+    private fun formatDayOfWeek(date: Long): String {
+        val df = SimpleDateFormat("EEE", Locale.getDefault())
+        return df.format(date * 1000)
     }
 }

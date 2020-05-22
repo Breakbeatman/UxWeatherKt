@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:visibility="invisible"
+    card_view:cardCornerRadius="4dp">
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="4dp">
+
+        <ImageView
+            android:id="@+id/card_detail_current_weather__ivParameterType"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center"
+            android:layout_weight="30" />
+
+        <TextView
+            android:id="@+id/card_detail_current_weather__tvParameterTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="30"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/card_detail_current_weather__tvParameterValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="40"
+            android:fontFamily="@font/roboto_ligth"
+            android:textSize="19sp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
