@@ -7,6 +7,7 @@ import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastD
 import com.example.uxweatherkt.presenter.util.IconWeatherBinder
 import com.example.uxweatherkt.presenter.util.UserLocationFinder
 import com.example.uxweatherkt.ui.userLocation.UserLocation
+import com.example.uxweatherkt.weather.WeatherModelImpl
 import com.example.uxweatherkt.weather.WeatherModelStubImpl
 import com.example.uxweatherkt.weather.repository.HttpRequestExecutor
 import com.example.uxweatherkt.weather.util.WeatherJSONParser

@@ -12,5 +12,6 @@ class CurrentWeatherRow(
     val visibility: String,
     val dewPoint: String,
     val weatherDescription: String,
-    val iconId: Int
+    val iconId: Int,
+    val backgroundId: Int
 )

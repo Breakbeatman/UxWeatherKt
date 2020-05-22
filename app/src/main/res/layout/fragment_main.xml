@@ -8,13 +8,12 @@
     android:orientation="vertical"
     tools:context=".ui.MainFragment">
 
-
     <ProgressBar
         android:id="@+id/fragment_main__pbLoading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/fragment_main__tvDataIsNotAvailable"
@@ -24,26 +23,86 @@
         android:textSize="40sp"
         android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/fragment_main__tvDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/fragment_main__tvTemp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fragment_main__clCurrent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="50sp" />
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
-    <ImageView
-        android:id="@+id/fragment_main__ivDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/fragment_main__tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:background="@drawable/md_transparent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/fragment_main__tvDescription"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/fragment_main__ivDescription"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/md_transparent"
+            android:padding="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_main__tvDate" />
+
+        <TextView
+            android:id="@+id/fragment_main__tvDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:background="@drawable/md_transparent"
+            android:padding="0dp"
+            app:layout_constraintBottom_toBottomOf="@+id/fragment_main__ivDescription"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__ivDescription"
+            app:layout_constraintTop_toTopOf="@id/fragment_main__ivDescription" />
+
+        <TextView
+            android:id="@+id/fragment_main__tvTemp"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:textColor="#000000"
+            android:background="@drawable/md_transparent"
+            android:includeFontPadding="false"
+            android:textSize="80sp"
+            android:textStyle="normal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_main__ivDescription" />
+
+        <TextView
+            android:id="@+id/fragment_main__tvWind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:background="@drawable/md_transparent"
+            android:text="@string/wind"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_main__tvTemp" />
+
+        <TextView
+            android:id="@+id/fragment_main__tvWindDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:background="@drawable/md_transparent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__tvWind"
+            app:layout_constraintTop_toTopOf="@+id/fragment_main__tvWind" />
+
+        <TextView
+            android:id="@+id/fragment_main__tvWindSpeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#000000"
+            android:background="@drawable/md_transparent"
+            app:layout_constraintStart_toEndOf="@+id/fragment_main__tvWindDirection"
+            app:layout_constraintTop_toTopOf="@id/fragment_main__tvWindDirection" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/fragment_main__tvDetail"
@@ -51,6 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="@string/detail"
+        android:textStyle="bold"
         android:visibility="invisible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -125,7 +185,6 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
     <include
         android:id="@+id/fragment_main__view_hourly_forecast"
         layout="@layout/view_recycler"
@@ -135,29 +194,5 @@
         android:id="@+id/fragment_main__view_daily_forecast"
         layout="@layout/view_recycler"
         android:visibility="invisible" />
-
-    <TextView
-        android:id="@+id/fragment_main__tvWind"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        android:layout_marginTop="10dp"
-        android:text="@string/detail" />
-
-    <TextView
-        android:id="@+id/fragment_main__tvWindSpeed"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <TextView
-        android:id="@+id/fragment_main__tvWindDirection"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <ImageView
-        android:id="@+id/fragment_main__ivWindDirection"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_wind_direction" />
 
 </LinearLayout>

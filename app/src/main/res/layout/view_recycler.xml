@@ -14,6 +14,7 @@
             android:id="@+id/view_recycler__tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textStyle="bold"
             android:layout_centerVertical="true"/>
 
         <ImageView

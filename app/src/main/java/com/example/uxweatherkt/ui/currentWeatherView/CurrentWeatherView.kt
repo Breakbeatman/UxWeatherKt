@@ -4,9 +4,9 @@ import android.location.Location
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -39,11 +39,11 @@ class CurrentWeatherView : BaseView, WeatherView {
     private lateinit var tvTemp: TextView
     private lateinit var tvWindSpeed: TextView
     private lateinit var tvWindDir: TextView
-    private lateinit var tvWind: TextView
+    private lateinit var tvDetail: TextView
     private lateinit var tvDescription: TextView
     private lateinit var ivDescription: ImageView
     private lateinit var progress: ProgressBar
-    private lateinit var tvDetail: TextView
+    private lateinit var clCurrent: ConstraintLayout
 
     private lateinit var feelsLikeCardView: CardView
     private lateinit var ivFeelLike: ImageView
@@ -76,11 +76,11 @@ class CurrentWeatherView : BaseView, WeatherView {
     private lateinit var tvPressureValue: TextView
 
     override fun bindData() {
-        hideLoading()
         if (liveData.value == null) {
             dataIsNotAvailable()
             return
         }
+        hideLoading()
         initData(liveData.value)
     }
 
@@ -109,8 +109,8 @@ class CurrentWeatherView : BaseView, WeatherView {
         liveData.observe(lifecycleOwner, Observer { bindData() })
         tvDate = baseRootView.findViewById(R.id.fragment_main__tvDate)
         tvTemp = baseRootView.findViewById(R.id.fragment_main__tvTemp)
+        clCurrent = baseRootView.findViewById(R.id.fragment_main__clCurrent)
         tvDetail = baseRootView.findViewById(R.id.fragment_main__tvDetail)
-        tvWind = baseRootView.findViewById(R.id.fragment_main__tvWind)
         tvWindSpeed = baseRootView.findViewById(R.id.fragment_main__tvWindSpeed)
         tvWindDir = baseRootView.findViewById(R.id.fragment_main__tvWindDirection)
         tvDescription = baseRootView.findViewById(R.id.fragment_main__tvDescription)
@@ -168,14 +168,15 @@ class CurrentWeatherView : BaseView, WeatherView {
     }
 
     private fun initData(currentWeatherRow: CurrentWeatherRow?) {
+        clCurrent.setBackgroundResource(currentWeatherRow!!.backgroundId)
         tvDate.text = currentWeatherRow?.date
         tvTemp.text = currentWeatherRow?.temp
         tvDescription.text = currentWeatherRow?.weatherDescription
         ivDescription.setImageResource(currentWeatherRow!!.iconId)
-        tvDetail.visibility = View.VISIBLE
+        clCurrent.visibility = View.VISIBLE
         tvWindSpeed.text = currentWeatherRow.windSpeed
         tvWindDir.text = currentWeatherRow.windDir
-        tvWind.visibility = View.VISIBLE
+        tvDetail.visibility = View.VISIBLE
         initDataFeelLikeCardView(currentWeatherRow)
         initDataHumidityCardView(currentWeatherRow)
         initDataUvIndexCardView(currentWeatherRow)
@@ -185,6 +186,7 @@ class CurrentWeatherView : BaseView, WeatherView {
     }
 
     private fun dataIsNotAvailable() {
+        progress.visibility = View.GONE
         tvDataIsNotAvailable.visibility = View.VISIBLE
     }
 

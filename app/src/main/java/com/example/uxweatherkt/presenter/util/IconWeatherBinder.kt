@@ -5,31 +5,45 @@ import com.example.uxweatherkt.R
 class IconWeatherBinder {
 
     fun bindIconId(code: Int, pod: String): Int {
-        val iconName = bindWeatherCode(code, pod)
+        val iconName = buildIconName(code, pod)
         return selectIcon(iconName)
     }
 
-    private fun bindWeatherCode(code: Int, pod: String): String {
+    fun bindBackgroundId(code: Int): Int {
         return when (code) {
-            //            //thunderstorm
+            in 200..233 -> R.drawable.thunderstorm_bg
+            in 300..321, in 500..504, 511 -> R.drawable.rain_bg
+            520, 521, 522, 531 -> R.drawable.shower_rain_bg
+            in 600..623 -> R.drawable.snow_bg
+            700, 711, 721, 731, 741, 751, 761, 762, 771, 781 -> R.drawable.mist_bg
+            800 -> R.drawable.clear_scy_bg
+            801, 802 -> R.drawable.few_clouds_bg
+            803 -> R.drawable.scattered_clouds_bg
+            else -> R.drawable.brocken_clouds_bg
+        }
+    }
+
+    private fun buildIconName(code: Int, pod: String): String {
+        return when (code) {
+            //            thunderstorm
             in 200..233 -> "200$pod"
-            //            //rain
+            //            rain
             in 300..321, in 500..504, 511 -> "300$pod"
-            //            //shower rain
+            //            shower rain
             520, 521, 522, 531 -> "500$pod"
-            //            //snow
+            //            snow
             in 600..623 -> "600$pod"
-            //            //mist
+            //            mist
             700, 711, 721, 731, 741, 751, 761, 762, 771, 781 -> "700$pod"
-            //            //clear sky
+            //            clear sky
             800 -> "800$pod"
-            //            //few clouds
+            //            few clouds
             801, 802 -> "8012$pod"
-            //            //scattered clouds
+            //            scattered clouds
             803 -> "803$pod"
-            //            //broken clouds
+            //            broken clouds
             804 -> "804$pod"
-            //            //unknown weather
+            //            unknown weather
             else -> "1000$pod"
         }.toString()
     }

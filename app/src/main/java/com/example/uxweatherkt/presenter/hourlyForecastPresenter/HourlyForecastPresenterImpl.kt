@@ -3,6 +3,7 @@ package com.example.uxweatherkt.presenter.hourlyForecastPresenter
 import android.location.Location
 import androidx.lifecycle.MutableLiveData
 import com.example.uxweatherkt.presenter.row.HourForecastRow
+import com.example.uxweatherkt.presenter.util.Coordinates
 import com.example.uxweatherkt.ui.WeatherView
 import com.example.uxweatherkt.weather.WeatherModel
 
@@ -16,15 +17,14 @@ class HourlyForecastPresenterImpl(
 
     private var liveData = MutableLiveData<List<HourForecastRow>>()
 
-    private lateinit var latitude: String
-    private lateinit var longitude: String
+    private lateinit var coordinates: Coordinates
 
     override fun getData(location: Location) {
         initCoordinates(location)
         if (hourlyForecastRow == null) {
             object : Thread() {
                 override fun run() {
-                    val hourlyForecast = weatherModel.loadHourlyForecastBy(latitude, longitude)
+                    val hourlyForecast = weatherModel.loadHourlyForecastBy(coordinates)
                     if (hourlyForecast == null) {
                         liveData.postValue(null)
                         return
@@ -71,7 +71,8 @@ class HourlyForecastPresenterImpl(
     }
 
     private fun initCoordinates(location: Location) {
-        latitude = location.latitude.toString()
-        longitude = location.longitude.toString()
+        val latitude = location.latitude.toString()
+        val longitude = location.longitude.toString()
+        coordinates = Coordinates(latitude, longitude)
     }
 }

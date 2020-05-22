@@ -12,7 +12,7 @@
         android:layout_height="100dp"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="4dp">
 
         <ImageView
             android:id="@+id/card_detail_current_weather__ivParameterType"
@@ -35,7 +35,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="40"
-            android:textSize="20sp" />
+            android:fontFamily="@font/roboto_ligth"
+            android:textSize="19sp" />
 
     </LinearLayout>
 

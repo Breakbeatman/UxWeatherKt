@@ -1,6 +1,7 @@
 package com.example.uxweatherkt.weather
 
 import android.opengl.Visibility
+import com.example.uxweatherkt.presenter.util.Coordinates
 import com.example.uxweatherkt.weather.model.CurrentWeather
 import com.example.uxweatherkt.weather.model.DayForecast
 import com.example.uxweatherkt.weather.model.HourForecast
@@ -15,7 +16,7 @@ class WeatherModelStubImpl : WeatherModel {
     private var random = Random(currentTime)
 
     //    TODO: random weather generator
-    override fun loadCurrentWeatherBy(latitude: String, longitude: String): CurrentWeather {
+    override fun loadCurrentWeatherBy(coordinates: Coordinates): CurrentWeather {
         return currentWeatherList()
     }
 
@@ -23,10 +24,7 @@ class WeatherModelStubImpl : WeatherModel {
         return currentWeatherList()
     }
 
-    override fun loadHourlyForecastBy(
-        latitude: String,
-        longitude: String
-    ): ArrayList<HourForecast> {
+    override fun loadHourlyForecastBy(coordinates: Coordinates): ArrayList<HourForecast> {
         return hourlyForecast()
     }
 
@@ -34,7 +32,7 @@ class WeatherModelStubImpl : WeatherModel {
         return hourlyForecast()
     }
 
-    override fun loadDailyForecastBy(latitude: String, longitude: String): ArrayList<DayForecast> {
+    override fun loadDailyForecastBy(coordinates: Coordinates): ArrayList<DayForecast> {
         return dailyForecast()
     }
 
@@ -45,7 +43,7 @@ class WeatherModelStubImpl : WeatherModel {
 
     private fun currentWeatherList(): CurrentWeather {
         return CurrentWeather(
-            Weather(802, "Cloudy"),
+            Weather(weatherCodeGen(), "Cloudy"),
             podGen(),
             tempGen(),
             tempGen(),
@@ -63,7 +61,7 @@ class WeatherModelStubImpl : WeatherModel {
         val list = ArrayList<HourForecast>()
         for (i in 0..24) {
             val hourForecast = HourForecast(
-                Weather(800, "hello"),
+                Weather(800, "Clear"),
                 "d",
                 dateHourlyGen(i),
                 3.0,
@@ -81,7 +79,7 @@ class WeatherModelStubImpl : WeatherModel {
         val list = ArrayList<DayForecast>()
         for (i in 0..14) {
             val dayForecast = DayForecast(
-                Weather(800, "what"),
+                Weather(804, "Cloudy"),
                 dateDailyGen(i),
                 22.0,
                 12.0,
@@ -109,7 +107,7 @@ class WeatherModelStubImpl : WeatherModel {
     }
 
     private fun dateDailyGen(count: Int): Long {
-        val day = 3600000 * 24
+        val day = 3600 * 24
         return currentTime + day * count
     }
 
@@ -139,5 +137,26 @@ class WeatherModelStubImpl : WeatherModel {
 
     private fun dewPointGen(): Double {
         return Math.random() * 100
+    }
+
+    private fun weatherCodeGen(): Int {
+        val array = arrayOf(
+            200,
+            300,
+            520,
+            521,
+            600,
+            700,
+            711,
+            721,
+            731,
+            800,
+            801,
+            802,
+            803,
+            804
+        )
+        println(array.size)
+        return array[(Math.random()*14).toInt()]
     }
 }

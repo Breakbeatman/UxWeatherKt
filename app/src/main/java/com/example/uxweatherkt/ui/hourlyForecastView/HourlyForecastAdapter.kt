@@ -1,7 +1,6 @@
 package com.example.uxweatherkt.ui.hourlyForecastView
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -21,7 +20,7 @@ class HourlyForecastAdapter(var listener: Listener) : RecyclerView.Adapter<Hourl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.row_hour_forecast_2, parent, false) as CardView
+        val view = layoutInflater.inflate(R.layout.row_hour_forecast, parent, false) as CardView
         return ViewHolder(view)
     }
 

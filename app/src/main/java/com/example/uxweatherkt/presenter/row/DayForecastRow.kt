@@ -7,6 +7,7 @@ import android.os.Parcelable
 class DayForecastRow : Parcelable {
 
     var date: String?
+    var dayOfWeek: String?
     var maxTemp: String?
     var minTemp: String?
     var maxTempFeelLike: String?
@@ -18,6 +19,7 @@ class DayForecastRow : Parcelable {
 
     constructor(
         date: String,
+        dayOfWeek: String,
         maxTemp: String,
         minTemp: String,
         maxTempFeelLike: String,
@@ -28,6 +30,7 @@ class DayForecastRow : Parcelable {
         iconId: Int
     ) {
         this.date = date
+        this.dayOfWeek = dayOfWeek
         this.maxTemp = maxTemp
         this.minTemp = minTemp
         this.maxTempFeelLike = maxTempFeelLike
@@ -42,13 +45,14 @@ class DayForecastRow : Parcelable {
         val array = arrayOfNulls<String>(8)
         parcel.readStringArray(array)
         date = array[0]
-        maxTemp = array[1]
-        minTemp = array[2]
-        maxTempFeelLike = array[3]
-        minTempFeelLike = array[4]
-        pressure = array[5]
-        humidity = array[6]
-        windSpeed = array[7]
+        dayOfWeek = array[1]
+        maxTemp = array[2]
+        minTemp = array[3]
+        maxTempFeelLike = array[4]
+        minTempFeelLike = array[5]
+        pressure = array[6]
+        humidity = array[7]
+        windSpeed = array[8]
         iconId = parcel.readInt()
     }
 
@@ -56,6 +60,7 @@ class DayForecastRow : Parcelable {
         dest?.writeStringArray(
             arrayOf(
                 date,
+                dayOfWeek,
                 maxTemp,
                 minTemp,
                 maxTempFeelLike,

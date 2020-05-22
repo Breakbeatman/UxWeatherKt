@@ -1,6 +1,7 @@
 package com.example.uxweatherkt.weather
 
 import com.example.uxweatherkt.*
+import com.example.uxweatherkt.presenter.util.Coordinates
 import com.example.uxweatherkt.weather.model.CurrentWeather
 import com.example.uxweatherkt.weather.model.DayForecast
 import com.example.uxweatherkt.weather.model.HourForecast
@@ -17,9 +18,9 @@ class WeatherModelImpl(
     private lateinit var hourlyForecast: ArrayList<HourForecast>
     private lateinit var dailyForecast: ArrayList<DayForecast>
 
-    override fun loadCurrentWeatherBy(latitude: String, longitude: String): CurrentWeather? {
+    override fun loadCurrentWeatherBy(coordinates: Coordinates): CurrentWeather? {
         val response =
-            httpRequestExecutor.makeRequest(REQUEST_TYPE_VALUE_CURRENT, latitude, longitude)
+            httpRequestExecutor.makeRequest(REQUEST_TYPE_VALUE_CURRENT, coordinates)
                 ?: return null
         currentWeather =
             weatherJSONParser.parseCurrentWeather(response)
@@ -35,12 +36,9 @@ class WeatherModelImpl(
         return currentWeather
     }
 
-    override fun loadHourlyForecastBy(
-        latitude: String,
-        longitude: String
-    ): ArrayList<HourForecast>? {
+    override fun loadHourlyForecastBy(coordinates: Coordinates): ArrayList<HourForecast>? {
         val response =
-            httpRequestExecutor.makeRequest(REQUEST_TYPE_VALUE_HOURLY, latitude, longitude)
+            httpRequestExecutor.makeRequest(REQUEST_TYPE_VALUE_HOURLY, coordinates)
                 ?: return null
         hourlyForecast =
             weatherJSONParser.parseHourlyWeather(response)
@@ -56,9 +54,9 @@ class WeatherModelImpl(
         return hourlyForecast
     }
 
-    override fun loadDailyForecastBy(latitude: String, longitude: String): ArrayList<DayForecast>? {
+    override fun loadDailyForecastBy(coordinates: Coordinates): ArrayList<DayForecast>? {
         val response =
-            httpRequestExecutor.makeRequest(REQUEST_TYPE_VALUE_DAILY, latitude, longitude)
+            httpRequestExecutor.makeRequest(REQUEST_TYPE_VALUE_DAILY, coordinates)
                 ?: return null
         dailyForecast =
             weatherJSONParser.parseDailyWeather(response)
