@@ -4,9 +4,9 @@ import android.location.Location
 import com.example.uxweatherkt.ui.WeatherView
 
 interface WeatherPresenter {
-    fun getData(location: Location)
+    fun getWeatherData(location: Location)
 
-    fun getData(cityName: String)
+    fun getWeatherData(cityName: String)
 
     fun attachView(weatherView: WeatherView)
 

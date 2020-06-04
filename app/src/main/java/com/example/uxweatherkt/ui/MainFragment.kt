@@ -66,15 +66,15 @@ class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAd
     }
 
     fun passLocation(location: Location) {
-        currentWeatherView.onLocationReady(location)
-        hourlyForecastView.onLocationReady(location)
-        dailyForecastView.onLocationReady(location)
+        currentWeatherPresenter?.getWeatherData(location)
+        hourlyForecastPresenter?.getWeatherData(location)
+        dailyForecastPresenter?.getWeatherData(location)
     }
 
     fun passCityName(cityName: String) {
-        currentWeatherView.onCityNameReady(cityName)
-        hourlyForecastView.onCityNameReady(cityName)
-        dailyForecastView.onCityNameReady(cityName)
+        currentWeatherPresenter?.getWeatherData(cityName)
+        hourlyForecastPresenter?.getWeatherData(cityName)
+        dailyForecastPresenter?.getWeatherData(cityName)
     }
 
     private fun initCurrentWeatherPresenter() {
@@ -90,7 +90,6 @@ class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAd
             currentWeatherPresenter =
                 CurrentWeatherPresenterImpl(weatherModel, currentWeatherDataBinder)
         }
-
     }
 
     private fun initHourlyForecastPresenter() {
