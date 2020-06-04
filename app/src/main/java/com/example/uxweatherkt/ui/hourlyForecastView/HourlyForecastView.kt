@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
-import com.example.uxweatherkt.REQUEST_TYPE_VALUE_HOURLY_UPPER
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastPresenter
 import com.example.uxweatherkt.presenter.row.HourForecastRow
 import com.example.uxweatherkt.ui.baseView.BaseView
@@ -62,15 +61,15 @@ class HourlyForecastView : BaseView, WeatherView {
         baseRootView.visibility = View.VISIBLE
     }
 
-    fun onLocationReady(location: Location) {
-        showLoading()
-        hourlyForecastPresenter?.getData(location)
-    }
-
-    fun onCityNameReady(cityName: String) {
-        showLoading()
-        hourlyForecastPresenter?.getData(cityName)
-    }
+//    fun onLocationReady(location: Location) {
+//        showLoading()
+//        hourlyForecastPresenter?.getWeatherData(location)
+//    }
+//
+//    fun onCityNameReady(cityName: String) {
+//        showLoading()
+//        hourlyForecastPresenter?.getWeatherData(cityName)
+//    }
 
     private fun init() {
         liveData = hourlyForecastPresenter!!.getLiveData()

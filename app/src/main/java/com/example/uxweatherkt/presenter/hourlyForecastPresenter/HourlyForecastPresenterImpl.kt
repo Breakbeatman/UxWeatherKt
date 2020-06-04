@@ -19,8 +19,12 @@ class HourlyForecastPresenterImpl(
 
     private lateinit var coordinates: Coordinates
 
-    override fun getData(location: Location) {
+    override fun getWeatherData(location: Location) {
         initCoordinates(location)
+        loadWeatherByCoors()
+    }
+
+    private fun loadWeatherByCoors() {
         if (hourlyForecastRow == null) {
             object : Thread() {
                 override fun run() {
@@ -39,7 +43,7 @@ class HourlyForecastPresenterImpl(
         }
     }
 
-    override fun getData(cityName: String) {
+    override fun getWeatherData(cityName: String) {
         if (hourlyForecastRow == null) {
             object : Thread() {
                 override fun run() {

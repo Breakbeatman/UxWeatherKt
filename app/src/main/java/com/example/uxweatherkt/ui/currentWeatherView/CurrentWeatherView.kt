@@ -94,15 +94,15 @@ class CurrentWeatherView : BaseView, WeatherView {
         baseRootView.visibility = View.VISIBLE
     }
 
-    fun onLocationReady(location: Location) {
-        showLoading()
-        currentWeatherPresenter!!.getData(location)
-    }
-
-    fun onCityNameReady(cityName: String) {
-        showLoading()
-        currentWeatherPresenter!!.getData(cityName)
-    }
+//    fun onLocationReady(location: Location) {
+//        showLoading()
+//        currentWeatherPresenter!!.getData(location)
+//    }
+//
+//    fun onCityNameReady(cityName: String) {
+//        showLoading()
+//        currentWeatherPresenter!!.getData(cityName)
+//    }
 
     private fun init() {
         liveData = currentWeatherPresenter!!.getLiveData()

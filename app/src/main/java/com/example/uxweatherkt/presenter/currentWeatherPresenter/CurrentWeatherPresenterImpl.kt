@@ -19,9 +19,14 @@ class CurrentWeatherPresenterImpl(
 
     private lateinit var coordinates: Coordinates
 
-//    TODO: coroutines
-    override fun getData(location: Location) {
+
+    //    TODO: coroutines
+    override fun getWeatherData(location: Location) {
         initCoordinates(location)
+        loadWeatherByCoors()
+    }
+
+    private fun loadWeatherByCoors() {
         if (currentWeatherRow == null) {
             object : Thread() {
                 override fun run() {
@@ -40,7 +45,11 @@ class CurrentWeatherPresenterImpl(
         }
     }
 
-    override fun getData(cityName: String) {
+    override fun getWeatherData(cityName: String) {
+        loadWeatherBy(cityName)
+    }
+
+    private fun loadWeatherBy(cityName: String) {
         if (currentWeatherRow == null) {
             object : Thread() {
                 override fun run() {

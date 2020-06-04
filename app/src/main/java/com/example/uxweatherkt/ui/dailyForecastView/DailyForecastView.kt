@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uxweatherkt.R
-import com.example.uxweatherkt.REQUEST_TYPE_VALUE_DAILY_UPPER
 import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastPresenter
 import com.example.uxweatherkt.presenter.row.DayForecastRow
 import com.example.uxweatherkt.ui.baseView.BaseView
@@ -62,15 +61,15 @@ class DailyForecastView : BaseView, WeatherView {
         baseRootView.visibility = View.VISIBLE
     }
 
-    fun onLocationReady(location: Location) {
-        showLoading()
-        dailyForecastPresenter?.getData(location)
-    }
-
-    fun onCityNameReady(cityName: String) {
-        showLoading()
-        dailyForecastPresenter?.getData(cityName)
-    }
+//    fun onLocationReady(location: Location) {
+//        showLoading()
+//        dailyForecastPresenter?.getWeatherData(location)
+//    }
+//
+//    fun onCityNameReady(cityName: String) {
+//        showLoading()
+//        dailyForecastPresenter?.getWeatherData(cityName)
+//    }
 
     private fun init() {
         liveData = dailyForecastPresenter!!.getLiveData()
