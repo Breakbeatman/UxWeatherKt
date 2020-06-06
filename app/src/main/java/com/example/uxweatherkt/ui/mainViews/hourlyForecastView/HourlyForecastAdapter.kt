@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.ui.hourlyForecastView
+package com.example.uxweatherkt.ui.mainViews.hourlyForecastView
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

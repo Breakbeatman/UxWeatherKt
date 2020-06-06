@@ -1,4 +1,4 @@
-package com.example.uxweatherkt.ui.dailyForecastView
+package com.example.uxweatherkt.ui.mainViews.dailyForecastView
 
 import android.view.LayoutInflater
 import android.view.View
@@ -16,7 +16,7 @@ class DailyForecastAdapter(var listener: Listener) :
         fun onDayForecastClick(dayForecastRow: DayForecastRow)
     }
 
-    private var dailyForecastView = ArrayList<DayForecastRow>()
+    private var dailyForecastRows = ArrayList<DayForecastRow>()
 
     override fun getItemViewType(position: Int): Int {
         return super.getItemViewType(position)
@@ -31,23 +31,23 @@ class DailyForecastAdapter(var listener: Listener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dayForecastView = dailyForecastView[position]
-        holder.tvMaxTemp.text = dayForecastView.maxTemp
+        val dayForecastRows = dailyForecastRows[position]
+        holder.tvMaxTemp.text = dayForecastRows.maxTemp
         holder.ivMinToMax
-        holder.tvMinTemp.text = dayForecastView.minTemp
-        holder.ivWeather.setImageResource(dayForecastView.iconId)
-        holder.tvDate.text = dayForecastView.date
-        holder.tvDayOfWeek.text = dayForecastView.dayOfWeek
-        holder.itemView.setOnClickListener { listener.onDayForecastClick(dayForecastView) }
+        holder.tvMinTemp.text = dayForecastRows.minTemp
+        holder.ivWeather.setImageResource(dayForecastRows.iconId)
+        holder.tvDate.text = dayForecastRows.date
+        holder.tvDayOfWeek.text = dayForecastRows.dayOfWeek
+        holder.itemView.setOnClickListener { listener.onDayForecastClick(dayForecastRows) }
     }
 
     override fun getItemCount(): Int {
-        return dailyForecastView.size
+        return dailyForecastRows.size
     }
 
     fun setDailyForecast(dailyForecastRow: ArrayList<DayForecastRow>) {
-        this.dailyForecastView.clear()
-        this.dailyForecastView.addAll(dailyForecastRow)
+        this.dailyForecastRows.clear()
+        this.dailyForecastRows.addAll(dailyForecastRow)
         notifyDataSetChanged()
     }
 

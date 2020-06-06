@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,15 +23,19 @@ import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastVie
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastPresenter
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastPresenterImpl
 import com.example.uxweatherkt.presenter.hourlyForecastPresenter.HourlyForecastViewModel
+import com.example.uxweatherkt.presenter.row.CurrentWeatherRow
 import com.example.uxweatherkt.presenter.row.DayForecastRow
 import com.example.uxweatherkt.presenter.row.HourForecastRow
-import com.example.uxweatherkt.ui.currentWeatherView.CurrentWeatherView
-import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastAdapter
-import com.example.uxweatherkt.ui.dailyForecastView.DailyForecastView
-import com.example.uxweatherkt.ui.hourlyForecastView.HourlyForecastAdapter
-import com.example.uxweatherkt.ui.hourlyForecastView.HourlyForecastView
+import com.example.uxweatherkt.ui.mainViews.currentWeatherView.CurrentWeatherView
+import com.example.uxweatherkt.ui.mainViews.currentWeatherView.CurrentWeatherViewImpl
+import com.example.uxweatherkt.ui.mainViews.dailyForecastView.DailyForecastAdapter
+import com.example.uxweatherkt.ui.mainViews.dailyForecastView.DailyForecastView
+import com.example.uxweatherkt.ui.mainViews.dailyForecastView.DailyForecastViewImpl
+import com.example.uxweatherkt.ui.mainViews.hourlyForecastView.HourlyForecastAdapter
+import com.example.uxweatherkt.ui.mainViews.hourlyForecastView.HourlyForecastView
+import com.example.uxweatherkt.ui.mainViews.hourlyForecastView.HourlyForecastViewImpl
 
-class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAdapter.Listener {
+class MainFragment : Fragment(), HourlyForecastView.Listener, DailyForecastView.Listener {
 
     private lateinit var currentWeatherView: CurrentWeatherView
     private lateinit var hourlyForecastView: HourlyForecastView
@@ -38,6 +44,10 @@ class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAd
     private var currentWeatherPresenter: CurrentWeatherPresenter? = null
     private var hourlyForecastPresenter: HourlyForecastPresenter? = null
     private var dailyForecastPresenter: DailyForecastPresenter? = null
+
+    private lateinit var currentLiveData: MutableLiveData<CurrentWeatherRow>
+    private lateinit var hourlyLiveData: MutableLiveData<List<HourForecastRow>>
+    private lateinit var dailyLiveData: MutableLiveData<List<DayForecastRow>>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +65,7 @@ class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAd
         currentWeatherPresenter?.attachView(currentWeatherView)
         hourlyForecastPresenter?.attachView(hourlyForecastView)
         dailyForecastPresenter?.attachView(dailyForecastView)
+        observePresentersLiveData()
         return view
     }
 
@@ -118,29 +129,40 @@ class MainFragment : Fragment(), DailyForecastAdapter.Listener, HourlyForecastAd
     }
 
     private fun initViews(view: View) {
-        currentWeatherView = CurrentWeatherView(
-            view.findViewById(R.id.fragment_main__view_current_weather), this,
+        currentWeatherView = CurrentWeatherViewImpl(
+            view.findViewById(R.id.fragment_main__view_current_weather),
             currentWeatherPresenter
         )
-        val hLinearLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        val hourlyForecastAdapter = HourlyForecastAdapter(this)
-        hourlyForecastView = HourlyForecastView(
-            view.findViewById(R.id.fragment_main__view_hourly_forecast), this,
-            hourlyForecastPresenter, hourlyForecastAdapter, hLinearLayoutManager
+        hourlyForecastView = HourlyForecastViewImpl(
+            view.findViewById(R.id.fragment_main__view_hourly_forecast),
+            hourlyForecastPresenter, this
         )
-        val dLinearLayoutManager = LinearLayoutManager(activity, RecyclerView.HORIZONTAL, false)
-        val dailyForecastListAdapter = DailyForecastAdapter(this)
-        dailyForecastView = DailyForecastView(
-            view.findViewById(R.id.fragment_main__view_daily_forecast), this,
-            dailyForecastPresenter, dailyForecastListAdapter, dLinearLayoutManager
+        dailyForecastView = DailyForecastViewImpl(
+            view.findViewById(R.id.fragment_main__view_daily_forecast),
+            dailyForecastPresenter, this
         )
     }
 
-    override fun onDayForecastClick(dayForecastRow: DayForecastRow) {
-        DetailDayActivity.StartObj.start(context ?: return, dayForecastRow)
+    private fun observePresentersLiveData() {
+        currentLiveData = currentWeatherPresenter!!.getLiveData()
+        currentLiveData.observe(
+            this,
+            Observer { currentWeatherRow -> currentWeatherView.bindData(currentWeatherRow) })
+        hourlyLiveData = hourlyForecastPresenter!!.getLiveData()
+        hourlyLiveData.observe(
+            this,
+            Observer { hourlyForecastRow -> hourlyForecastView.bindData(hourlyForecastRow) })
+        dailyLiveData = dailyForecastPresenter!!.getLiveData()
+        dailyLiveData.observe(
+            this,
+            Observer { dailyForecastRow -> dailyForecastView.bindData(dailyForecastRow) })
     }
 
-    override fun onHourForecastClick(hourForecastRow: HourForecastRow) {
+    override fun onHourlyAdapterItemClick(hourForecastRow: HourForecastRow) {
         TODO("Not yet implemented")
+    }
+
+    override fun onDailyAdapterItemClick(dayForecastRow: DayForecastRow) {
+        DetailDayActivity.StartObj.start(context ?: return, dayForecastRow)
     }
 }
