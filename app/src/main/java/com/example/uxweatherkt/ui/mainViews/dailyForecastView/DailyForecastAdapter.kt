@@ -31,41 +31,32 @@ class DailyForecastAdapter(var listener: Listener) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dayForecastRows = dailyForecastRows[position]
-        holder.tvMaxTemp.text = dayForecastRows.maxTemp
+        val dayForecastRow = dailyForecastRows[position]
+        holder.tvMaxTemp.text = dayForecastRow.maxTemp
         holder.ivMinToMax
-        holder.tvMinTemp.text = dayForecastRows.minTemp
-        holder.ivWeather.setImageResource(dayForecastRows.iconId)
-        holder.tvDate.text = dayForecastRows.date
-        holder.tvDayOfWeek.text = dayForecastRows.dayOfWeek
-        holder.itemView.setOnClickListener { listener.onDayForecastClick(dayForecastRows) }
+        holder.tvMinTemp.text = dayForecastRow.minTemp
+        holder.ivWeather.setImageResource(dayForecastRow.iconId)
+        holder.tvDate.text = dayForecastRow.date
+        holder.tvDayOfWeek.text = dayForecastRow.dayOfWeek
+        holder.itemView.setOnClickListener { listener.onDayForecastClick(dayForecastRow) }
     }
 
     override fun getItemCount(): Int {
         return dailyForecastRows.size
     }
 
-    fun setDailyForecast(dailyForecastRow: ArrayList<DayForecastRow>) {
+    fun setDailyForecast(dailyForecastRow: List<DayForecastRow>) {
         this.dailyForecastRows.clear()
         this.dailyForecastRows.addAll(dailyForecastRow)
         notifyDataSetChanged()
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvMaxTemp: TextView
-        val ivMinToMax: ImageView
-        val tvMinTemp: TextView
-        val ivWeather: ImageView
-        val tvDate: TextView
-        val tvDayOfWeek: TextView
-
-        init {
-            tvMaxTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMax)
-            ivMinToMax = itemView.findViewById(R.id.row_day_forecast__ivMaxToMin)
-            tvMinTemp = itemView.findViewById(R.id.row_day_forecast__tvTempMin)
-            ivWeather = itemView.findViewById(R.id.row_day_forecast__ivWeather)
-            tvDate = itemView.findViewById(R.id.row_day_forecast__tvDate)
-            tvDayOfWeek = itemView.findViewById(R.id.row_day_forecast__tvDayOfWeek)
-        }
+        val tvMaxTemp: TextView = itemView.findViewById(R.id.row_day_forecast__tvTempMax)
+        val ivMinToMax: ImageView = itemView.findViewById(R.id.row_day_forecast__ivMaxToMin)
+        val tvMinTemp: TextView = itemView.findViewById(R.id.row_day_forecast__tvTempMin)
+        val ivWeather: ImageView = itemView.findViewById(R.id.row_day_forecast__ivWeather)
+        val tvDate: TextView = itemView.findViewById(R.id.row_day_forecast__tvDate)
+        val tvDayOfWeek: TextView = itemView.findViewById(R.id.row_day_forecast__tvDayOfWeek)
     }
 }

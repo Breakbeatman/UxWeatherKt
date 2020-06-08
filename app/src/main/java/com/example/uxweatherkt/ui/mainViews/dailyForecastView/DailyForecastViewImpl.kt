@@ -42,6 +42,10 @@ class DailyForecastViewImpl : BaseView, DailyForecastView, DailyForecastAdapter.
         initData(dailyForecastRow as ArrayList)
     }
 
+    private fun initData(dailyForecastRow: List<DayForecastRow>) {
+        dailyForecastAdapter.setDailyForecast(dailyForecastRow)
+    }
+
     override fun showLoading() {
         progress.visibility = View.VISIBLE
 //        baseRootView.visibility = View.INVISIBLE
@@ -62,10 +66,6 @@ class DailyForecastViewImpl : BaseView, DailyForecastView, DailyForecastAdapter.
         recyclerView = baseRootView.findViewById(R.id.view_recycler__recyclerView)
         recyclerView.adapter = dailyForecastAdapter
         recyclerView.layoutManager = linearLayoutManager
-    }
-
-    private fun initData(dailyForecastRow: ArrayList<DayForecastRow>) {
-        dailyForecastAdapter.setDailyForecast(dailyForecastRow)
     }
 
     override fun onDayForecastClick(dayForecastRow: DayForecastRow) {

@@ -22,6 +22,11 @@ class DailyForecastDataBinder(private val iconWeatherBinder: IconWeatherBinder) 
             val pressure: String = dailyForecast[i].pressure.toString()
             val humidity: String = dailyForecast[i].humidity.toString()
             val windSpeed: String = dailyForecast[i].windSpeed.toString()
+//            TODO
+            val windDir: String = "North"
+//            TODO
+            val weatherDescription = "Nice"
+            val pop = "POP"
             val iconId: Int = iconWeatherBinder.bindIconId(dailyForecast[i].weather.code, "d")
             dailyForecastView.add(
                 DayForecastRow(
@@ -34,6 +39,9 @@ class DailyForecastDataBinder(private val iconWeatherBinder: IconWeatherBinder) 
                     pressure,
                     humidity,
                     windSpeed,
+                    windDir,
+                    weatherDescription,
+                    pop,
                     iconId
                 )
             )
@@ -43,7 +51,7 @@ class DailyForecastDataBinder(private val iconWeatherBinder: IconWeatherBinder) 
 
     private fun formatDate(date: Long): String {
         val df = SimpleDateFormat("dd MMM", Locale.getDefault())
-        return df.format(date*1000)
+        return df.format(date * 1000)
     }
 
     private fun formatDayOfWeek(date: Long): String {
