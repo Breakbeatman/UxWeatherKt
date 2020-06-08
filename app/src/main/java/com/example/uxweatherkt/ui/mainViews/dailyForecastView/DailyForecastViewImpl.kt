@@ -1,6 +1,5 @@
-package com.example.uxweatherkt.ui.dailyForecastView
+package com.example.uxweatherkt.ui.mainViews.dailyForecastView
 
-import android.location.Location
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -13,42 +12,38 @@ import com.example.uxweatherkt.R
 import com.example.uxweatherkt.presenter.dailyForecastPresenter.DailyForecastPresenter
 import com.example.uxweatherkt.presenter.row.DayForecastRow
 import com.example.uxweatherkt.ui.baseView.BaseView
-import com.example.uxweatherkt.ui.WeatherView
 
-class DailyForecastView : BaseView, WeatherView {
+class DailyForecastViewImpl : BaseView, DailyForecastView, DailyForecastAdapter.Listener {
 
     constructor(
         baseRootView: View,
-        lifecycleOwner: LifecycleOwner,
         dailyForecastPresenter: DailyForecastPresenter?,
-        dailyForecastAdapter: DailyForecastAdapter,
-        linearLayoutManager: LinearLayoutManager
+        listener: DailyForecastView.Listener
     ) {
         this.baseRootView = baseRootView
-        this.lifecycleOwner = lifecycleOwner
         this.dailyForecastPresenter = dailyForecastPresenter
-        this.dailyForecastAdapter = dailyForecastAdapter
-        this.linearLayoutManager = linearLayoutManager
+        this.listener = listener
         init()
     }
 
-    private var lifecycleOwner: LifecycleOwner
     private var dailyForecastPresenter: DailyForecastPresenter? = null
-    private var dailyForecastAdapter: DailyForecastAdapter
-    private var linearLayoutManager: LinearLayoutManager
-
-    private lateinit var liveData: MutableLiveData<List<DayForecastRow>>
+    private var listener: DailyForecastView.Listener
+    private lateinit var dailyForecastAdapter: DailyForecastAdapter
 
     private lateinit var tvTitle: TextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var progress: ProgressBar
 
-    override fun bindData() {
+    override fun bindData(dailyForecastRow: List<DayForecastRow>?) {
         hideLoading()
-        if (liveData.value == null) {
+        if (dailyForecastRow == null) {
             return
         }
-        initData(liveData.value as ArrayList)
+        initData(dailyForecastRow as ArrayList)
+    }
+
+    private fun initData(dailyForecastRow: List<DayForecastRow>) {
+        dailyForecastAdapter.setDailyForecast(dailyForecastRow)
     }
 
     override fun showLoading() {
@@ -61,19 +56,10 @@ class DailyForecastView : BaseView, WeatherView {
         baseRootView.visibility = View.VISIBLE
     }
 
-//    fun onLocationReady(location: Location) {
-//        showLoading()
-//        dailyForecastPresenter?.getWeatherData(location)
-//    }
-//
-//    fun onCityNameReady(cityName: String) {
-//        showLoading()
-//        dailyForecastPresenter?.getWeatherData(cityName)
-//    }
-
     private fun init() {
-        liveData = dailyForecastPresenter!!.getLiveData()
-        liveData.observe(lifecycleOwner, Observer { bindData() })
+        dailyForecastAdapter = DailyForecastAdapter(this)
+        val linearLayoutManager =
+            LinearLayoutManager(baseRootView.context, RecyclerView.HORIZONTAL, false)
         progress = baseRootView.findViewById(R.id.view_recycler__pbLoading)
         tvTitle = baseRootView.findViewById(R.id.view_recycler__tvTitle)
         tvTitle.text = baseRootView.resources.getString(R.string.daily)
@@ -82,7 +68,7 @@ class DailyForecastView : BaseView, WeatherView {
         recyclerView.layoutManager = linearLayoutManager
     }
 
-    private fun initData(dailyForecastRow: ArrayList<DayForecastRow>) {
-        dailyForecastAdapter.setDailyForecast(dailyForecastRow)
+    override fun onDayForecastClick(dayForecastRow: DayForecastRow) {
+        listener.onDailyAdapterItemClick(dayForecastRow)
     }
 }

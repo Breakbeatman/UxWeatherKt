@@ -1,6 +1,5 @@
-package com.example.uxweatherkt.ui.currentWeatherView
+package com.example.uxweatherkt.ui.mainViews.currentWeatherView
 
-import android.location.Location
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
@@ -14,25 +13,19 @@ import com.example.uxweatherkt.R
 import com.example.uxweatherkt.presenter.currentWeatherPresenter.CurrentWeatherPresenter
 import com.example.uxweatherkt.presenter.row.CurrentWeatherRow
 import com.example.uxweatherkt.ui.baseView.BaseView
-import com.example.uxweatherkt.ui.WeatherView
 
-class CurrentWeatherView : BaseView, WeatherView {
+class CurrentWeatherViewImpl : BaseView, CurrentWeatherView {
 
     constructor(
         baseRootView: View,
-        lifecycleOwner: LifecycleOwner,
         currentWeatherPresenter: CurrentWeatherPresenter?
     ) {
         this.baseRootView = baseRootView
         this.currentWeatherPresenter = currentWeatherPresenter
-        this.lifecycleOwner = lifecycleOwner
         init()
     }
 
-    private var lifecycleOwner: LifecycleOwner
     private var currentWeatherPresenter: CurrentWeatherPresenter?
-
-    private lateinit var liveData: MutableLiveData<CurrentWeatherRow>
 
     private lateinit var tvDataIsNotAvailable: TextView
     private lateinit var tvDate: TextView
@@ -75,13 +68,13 @@ class CurrentWeatherView : BaseView, WeatherView {
     private lateinit var tvPressureTitle: TextView
     private lateinit var tvPressureValue: TextView
 
-    override fun bindData() {
-        if (liveData.value == null) {
+    override fun bindData(currentWeatherRow: CurrentWeatherRow?) {
+        if (currentWeatherRow == null) {
             dataIsNotAvailable()
             return
         }
         hideLoading()
-        initData(liveData.value)
+        initData(currentWeatherRow)
     }
 
     override fun showLoading() {
@@ -94,19 +87,8 @@ class CurrentWeatherView : BaseView, WeatherView {
         baseRootView.visibility = View.VISIBLE
     }
 
-//    fun onLocationReady(location: Location) {
-//        showLoading()
-//        currentWeatherPresenter!!.getData(location)
-//    }
-//
-//    fun onCityNameReady(cityName: String) {
-//        showLoading()
-//        currentWeatherPresenter!!.getData(cityName)
-//    }
-
     private fun init() {
-        liveData = currentWeatherPresenter!!.getLiveData()
-        liveData.observe(lifecycleOwner, Observer { bindData() })
+
         tvDate = baseRootView.findViewById(R.id.fragment_main__tvDate)
         tvTemp = baseRootView.findViewById(R.id.fragment_main__tvTemp)
         clCurrent = baseRootView.findViewById(R.id.fragment_main__clCurrent)

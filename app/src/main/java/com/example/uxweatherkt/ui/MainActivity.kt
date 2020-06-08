@@ -82,7 +82,6 @@ class MainActivity : AppCompatActivity(), UserLocationFinder.Listener {
         getUserPermission()
     }
 
-    //    TODO: try перенести в другой класс
     private fun init() {
         locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         userLocation = (application as App).getDependencyRoot().userLocation
@@ -144,4 +143,5 @@ class MainActivity : AppCompatActivity(), UserLocationFinder.Listener {
         val mainFragment = supportFragmentManager.findFragmentByTag("fr1") as MainFragment
         mainFragment.passCityName(cityName)
     }
+
 }

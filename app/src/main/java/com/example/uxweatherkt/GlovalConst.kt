@@ -3,6 +3,7 @@ package com.example.uxweatherkt
 const val MY_PERMISSIONS_FINE_LOCATION = 1
 
 const val MAIN_FRAGMENT_TAG = "fragment_main"
+const val DETAIL_FRAGMENT_TAG = "fragment_detail"
 
 const val PROXY_SERVER_PATH = "http://192.168.1.100:4567/forecast/"
 

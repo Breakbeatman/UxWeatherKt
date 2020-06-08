@@ -15,6 +15,9 @@ class DayForecastRow : Parcelable {
     var pressure: String?
     var humidity: String?
     var windSpeed: String?
+    var windDir: String?
+    var weatherDescription: String?
+    var pop: String?
     var iconId: Int
 
     constructor(
@@ -27,6 +30,9 @@ class DayForecastRow : Parcelable {
         pressure: String,
         humidity: String,
         windSpeed: String,
+        windDir: String,
+        weatherDescription: String,
+        pop: String,
         iconId: Int
     ) {
         this.date = date
@@ -38,11 +44,14 @@ class DayForecastRow : Parcelable {
         this.pressure = pressure
         this.humidity = humidity
         this.windSpeed = windSpeed
+        this.windDir = windDir
+        this.weatherDescription = weatherDescription
+        this.pop = pop
         this.iconId = iconId
     }
 
     private constructor (parcel: Parcel) {
-        val array = arrayOfNulls<String>(8)
+        val array = arrayOfNulls<String>(11)
         parcel.readStringArray(array)
         date = array[0]
         dayOfWeek = array[1]
@@ -53,6 +62,9 @@ class DayForecastRow : Parcelable {
         pressure = array[6]
         humidity = array[7]
         windSpeed = array[8]
+        windDir = array[9]
+        pop = array[10]
+        weatherDescription = array[11]
         iconId = parcel.readInt()
     }
 
